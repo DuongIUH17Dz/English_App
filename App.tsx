@@ -5,6 +5,13 @@ import { useState } from 'react';
 
 export default function App() {
   const [focusedInput, setFocusedInput] = useState<string | null>(null);
+  const [email, setEmail] = useState('');
+  const [fullname, setFullname] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+
+  // Check if all fields are filled
+  const isFormFilled = email && fullname && password && confirmPassword;
 
   return (
     <View style={styles.container}>
@@ -20,12 +27,16 @@ export default function App() {
         style={[styles.input, focusedInput === 'email' && styles.inputFocused]}
         onFocus={() => setFocusedInput('email')}
         onBlur={() => setFocusedInput(null)}
+        value={email}
+        onChangeText={setEmail}
       />
       <TextInput
         placeholder="Full Name"
         style={[styles.input, focusedInput === 'fullname' && styles.inputFocused]}
         onFocus={() => setFocusedInput('fullname')}
         onBlur={() => setFocusedInput(null)}
+        value={fullname}
+        onChangeText={setFullname}
       />
       <TextInput
         placeholder="Password"
@@ -33,6 +44,8 @@ export default function App() {
         style={[styles.input, focusedInput === 'password' && styles.inputFocused]}
         onFocus={() => setFocusedInput('password')}
         onBlur={() => setFocusedInput(null)}
+        value={password}
+        onChangeText={setPassword}
       />
       <TextInput
         placeholder="Confirm Password"
@@ -40,10 +53,12 @@ export default function App() {
         style={[styles.input, focusedInput === 'confirmPassword' && styles.inputFocused]}
         onFocus={() => setFocusedInput('confirmPassword')}
         onBlur={() => setFocusedInput(null)}
+        value={confirmPassword}
+        onChangeText={setConfirmPassword}
       />
 
       {/* Sign Up button */}
-      <TouchableOpacity style={styles.signUpButton}>
+      <TouchableOpacity style={[styles.signUpButton, isFormFilled && styles.signUpButtonFilled]}>
         <Text style={styles.signUpButtonText}>Sign Up</Text>
       </TouchableOpacity>
 
@@ -94,24 +109,29 @@ const styles = StyleSheet.create({
     borderColor: '#00BFFF', // Light blue border on focus
   },
   signUpButton: {
-    backgroundColor: '#4CAF50',
+    backgroundColor: '#91CDE7',
     paddingVertical: 15,
-    paddingHorizontal: 50,
-    borderRadius: 5,
+    paddingHorizontal: 100,
+    borderRadius: 10,
     marginTop: 10,
     marginBottom: 20,
+  },
+  signUpButtonFilled: {
+    backgroundColor: '#2196F3', // Darker blue when all fields are filled
   },
   signUpButtonText: {
     color: '#fff',
     fontWeight: 'bold',
-    fontSize: 16,
+    fontSize: 18,
   },
   orText: {
+    marginTop: 20,
     fontSize: 16,
-    color: '#888',
+    color: 'red',
     marginBottom: 10,
   },
   socialIcons: {
+    marginTop: 30,
     flexDirection: 'row',
     justifyContent: 'space-around',
     width: '60%',
