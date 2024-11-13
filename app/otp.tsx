@@ -1,43 +1,17 @@
-// OtpScreen.js
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, TextInput, TouchableOpacity, View,Image } from 'react-native';
 import { useState, useEffect } from 'react';
 import { useRoute } from '@react-navigation/native';
 
-export default function OtpScreen() {
-  const route = useRoute();
-  const { phone } = route.params;  
-
-  const [otp, setOtp] = useState('');
-  const [timer, setTimer] = useState(60);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      if (timer > 0) {
-        setTimer((prev) => prev - 1);
-      }
-    }, 1000);
-    return () => clearInterval(interval);
-  }, [timer]);
-
-  const handleVerify = () => {
-    // Handle OTP verification logic
-    alert('OTP Verified');
-  };
-
-  const handleResendOtp = () => {
-    // Reset the timer and resend the OTP logic
-    setTimer(60);
-    alert('OTP resent');
-  };
-
+export default function otp() {
+  
   return (
     <View style={styles.container}>
       {/* Logo Image */}
-      <Image source={require('./Image/Logo.png')} style={styles.logo} />
+      <Image source={require('.././assets/images/cat.png')} style={styles.logo} />
 
       {/* Phone Number */}
-      <Text style={styles.phoneText}>Phone Number: {phone}</Text>
+      <Text style={styles.phoneText}>Phone Number: 1234</Text>
 
       {/* OTP message */}
       <Text style={styles.otpText}>OTP has been sent to your phone number</Text>
@@ -46,18 +20,16 @@ export default function OtpScreen() {
       <TextInput
         placeholder="Enter OTP"
         style={styles.input}
-        value={otp}
-        onChangeText={setOtp}
       />
 
       {/* Verify Button */}
-      <TouchableOpacity style={styles.verifyButton} onPress={handleVerify}>
+      <TouchableOpacity style={styles.verifyButton}>
         <Text style={styles.verifyButtonText}>Verify</Text>
       </TouchableOpacity>
 
       {/* Resend OTP */}
-      <Text style={styles.resendText} onPress={handleResendOtp}>
-        Resend OTP in {timer}s
+      <Text style={styles.resendText} >
+        Resend OTP in s
       </Text>
 
       <StatusBar style="auto" />

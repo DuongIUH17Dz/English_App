@@ -1,25 +1,50 @@
-# English Learning App
+# Welcome to your Expo app 👋
 
-A mobile application designed to help users learn English in an engaging and effective way. Whether you're a beginner or looking to enhance your language skills, this app provides a variety of features to aid your learning journey.
+This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
 
-## Features
+## Get started
 
-- **Interactive Lessons**: Learn English through lessons that cover grammar, vocabulary, and speaking skills.
-- **Progress Tracking**: Track your learning progress and see how far you've come.
-- **Audio Support**: Listen to native speakers to help improve your pronunciation.
-- **Quizzes and Exercises**: Reinforce what you've learned with fun and challenging quizzes.
-- **Multi-level Support**: Whether you're a beginner or advanced learner, the app adjusts to your level.
-## 1.Sign Up
-![image](https://github.com/user-attachments/assets/d9b6eb90-e2f6-4096-88cd-5964360dd431)
-![image](https://github.com/user-attachments/assets/b9d20291-f1dc-4786-babe-f03dc0e221ad)
-![image](https://github.com/user-attachments/assets/5500ac5a-7f09-413a-a162-137c85df039d)
-![image](https://github.com/user-attachments/assets/23e4fb4e-bf64-41eb-a62d-d615c43d16be)
-![image](https://github.com/user-attachments/assets/d1a24f3e-3c1a-421f-8626-825689c2c54e)
-## 2.Sign In
-![image](https://github.com/user-attachments/assets/7b481371-dec4-48b7-b4b4-ece9956be7ca)
+1. Install dependencies
 
+   ```bash
+   npm install
+   ```
 
+2. Start the app
 
+   ```bash
+    npx expo start
+   ```
 
+In the output, you'll find options to open the app in a
 
+- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
+- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
+- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
+- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
 
+You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+
+## Get a fresh project
+
+When you're ready, run:
+
+```bash
+npm run reset-project
+```
+
+This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+
+## Learn more
+
+To learn more about developing your project with Expo, look at the following resources:
+
+- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
+- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+
+## Join the community
+
+Join our community of developers creating universal apps.
+
+- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
+- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.

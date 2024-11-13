@@ -2,8 +2,10 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, TextInput, TouchableOpacity, View, Image } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import { useState } from 'react';
+import { useRouter } from 'expo-router';
 
-export default function SignIn() {
+export default function Signin() {
+  const router = useRouter();
   const [focusedInput, setFocusedInput] = useState<string | null>(null);
   const [emailPhone, setEmailPhone] = useState('');
   const [password, setPassword] = useState('');
@@ -11,17 +13,25 @@ export default function SignIn() {
   // Check if both fields are filled
   const isFormFilled = emailPhone && password;
 
+  const handleSignIn = () => {
+    if (isFormFilled) {
+      router.push('/signup');
+    } else {
+      alert("Please fill in all fields");
+    }
+  };
+
   return (
     <View style={styles.container}>
       {/* Logo Image */}
-      <Image source={require('./Image/Logo.png')} style={styles.logo} />
+      <Image source={require('../assets/images/cat.png')} style={styles.logo} />
 
       {/* Sign In title */}
-      <Text style={styles.title}>SIGN IN</Text>
+      <Text style={styles.title}>Sign In</Text>
 
       {/* Input fields */}
       <TextInput
-        placeholder="Enter Email & Phone Number"
+        placeholder="Email & Phone Number"
         style={[styles.input, focusedInput === 'emailPhone' && styles.inputFocused]}
         onFocus={() => setFocusedInput('emailPhone')}
         onBlur={() => setFocusedInput(null)}
@@ -41,6 +51,7 @@ export default function SignIn() {
       {/* Sign In button */}
       <TouchableOpacity 
         style={[styles.signInButton, isFormFilled ? styles.signInButtonFilled : null]}
+        onPress={handleSignIn}
       >
         <Text style={styles.signInButtonText}>Sign In</Text>
       </TouchableOpacity>
@@ -51,7 +62,7 @@ export default function SignIn() {
       </TouchableOpacity>
 
       {/* Or sign in with */}
-      <Text style={styles.orText}>or sign in with</Text>
+      <Text style={styles.orText}>Or Sign in With</Text>
 
       {/* Social media icons */}
       <View style={styles.socialIcons}>
@@ -80,37 +91,38 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   title: {
-    fontSize: 24,
+    fontSize: 48,
     fontWeight: 'bold',
-    marginBottom: 20,
-    textTransform: 'uppercase',
+    marginBottom: 20
   },
   input: {
     width: '100%',
     padding: 15,
     borderWidth: 1,
     borderColor: '#ccc',
-    borderRadius: 20,
+    borderRadius: 14,
     marginBottom: 15,
+    backgroundColor: '#F3F3F3'
   },
   inputFocused: {
-    borderColor: '#00BFFF', // Light blue border on focus
+    borderColor: '#00BFFF',
   },
   signInButton: {
     backgroundColor: '#91CDE7',
     paddingVertical: 15,
-    paddingHorizontal: 100,
+    width: '100%',
     borderRadius: 10,
     marginTop: 10,
     marginBottom: 20,
   },
   signInButtonFilled: {
-    backgroundColor: '#2196F3', // Darker blue when both fields are filled
+    backgroundColor: '#2196F3', 
   },
   signInButtonText: {
     color: '#fff',
     fontWeight: 'bold',
     fontSize: 18,
+    textAlign: 'center',
   },
   forgetPassword: {
     fontSize: 16,
@@ -120,7 +132,7 @@ const styles = StyleSheet.create({
   orText: {
     marginTop: 20,
     fontSize: 16,
-    color: 'red',
+    color: '#555252',
     marginBottom: 10,
   },
   socialIcons: {
