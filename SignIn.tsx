@@ -3,40 +3,30 @@ import { StyleSheet, Text, TextInput, TouchableOpacity, View, Image } from 'reac
 import { FontAwesome } from '@expo/vector-icons';
 import { useState } from 'react';
 
-export default function App() {
+export default function SignIn() {
   const [focusedInput, setFocusedInput] = useState<string | null>(null);
-  const [email, setEmail] = useState('');
-  const [fullname, setFullname] = useState('');
+  const [emailPhone, setEmailPhone] = useState('');
   const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
 
-  // Check if all fields are filled
-  const isFormFilled = email && fullname && password && confirmPassword;
+  // Check if both fields are filled
+  const isFormFilled = emailPhone && password;
 
   return (
     <View style={styles.container}>
       {/* Logo Image */}
       <Image source={require('./Image/Logo.png')} style={styles.logo} />
 
-      {/* Sign Up title */}
-      <Text style={styles.title}>SIGN UP</Text>
+      {/* Sign In title */}
+      <Text style={styles.title}>SIGN IN</Text>
 
       {/* Input fields */}
       <TextInput
         placeholder="Enter Email & Phone Number"
-        style={[styles.input, focusedInput === 'email' && styles.inputFocused]}
-        onFocus={() => setFocusedInput('email')}
+        style={[styles.input, focusedInput === 'emailPhone' && styles.inputFocused]}
+        onFocus={() => setFocusedInput('emailPhone')}
         onBlur={() => setFocusedInput(null)}
-        value={email}
-        onChangeText={setEmail}
-      />
-      <TextInput
-        placeholder="Full Name"
-        style={[styles.input, focusedInput === 'fullname' && styles.inputFocused]}
-        onFocus={() => setFocusedInput('fullname')}
-        onBlur={() => setFocusedInput(null)}
-        value={fullname}
-        onChangeText={setFullname}
+        value={emailPhone}
+        onChangeText={setEmailPhone}
       />
       <TextInput
         placeholder="Password"
@@ -47,25 +37,21 @@ export default function App() {
         value={password}
         onChangeText={setPassword}
       />
-      <TextInput
-        placeholder="Confirm Password"
-        secureTextEntry
-        style={[styles.input, focusedInput === 'confirmPassword' && styles.inputFocused]}
-        onFocus={() => setFocusedInput('confirmPassword')}
-        onBlur={() => setFocusedInput(null)}
-        value={confirmPassword}
-        onChangeText={setConfirmPassword}
-      />
 
-      {/* Sign Up button */}
+      {/* Sign In button */}
       <TouchableOpacity 
-  style={[styles.signUpButton, isFormFilled ? styles.signUpButtonFilled : null]}
->
-  <Text style={styles.signUpButtonText}>Sign Up</Text>
-</TouchableOpacity>
+        style={[styles.signInButton, isFormFilled ? styles.signInButtonFilled : null]}
+      >
+        <Text style={styles.signInButtonText}>Sign In</Text>
+      </TouchableOpacity>
 
-      {/* Or sign up with */}
-      <Text style={styles.orText}>or sign up with</Text>
+      {/* Forget Password */}
+      <TouchableOpacity>
+        <Text style={styles.forgetPassword}>Forget Password?</Text>
+      </TouchableOpacity>
+
+      {/* Or sign in with */}
+      <Text style={styles.orText}>or sign in with</Text>
 
       {/* Social media icons */}
       <View style={styles.socialIcons}>
@@ -110,7 +96,7 @@ const styles = StyleSheet.create({
   inputFocused: {
     borderColor: '#00BFFF', // Light blue border on focus
   },
-  signUpButton: {
+  signInButton: {
     backgroundColor: '#91CDE7',
     paddingVertical: 15,
     paddingHorizontal: 100,
@@ -118,13 +104,18 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: 20,
   },
-  signUpButtonFilled: {
-    backgroundColor: '#2196F3', // Darker blue when all fields are filled
+  signInButtonFilled: {
+    backgroundColor: '#2196F3', // Darker blue when both fields are filled
   },
-  signUpButtonText: {
+  signInButtonText: {
     color: '#fff',
     fontWeight: 'bold',
     fontSize: 18,
+  },
+  forgetPassword: {
+    fontSize: 16,
+    color: '#007AFF',
+    marginBottom: 20,
   },
   orText: {
     marginTop: 20,
