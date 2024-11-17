@@ -5,6 +5,7 @@ export default function RootLayout() {
     <Stack screenOptions={{ headerShown: false }}>
       <Stack.Screen name="signin" />
       <Stack.Screen name="signup" />
+      <Stack.Screen name="dictionary" />
       <Stack.Screen name="otp" />
       <Stack.Screen name="homepage" />
       <Stack.Screen name="(tabs)" />

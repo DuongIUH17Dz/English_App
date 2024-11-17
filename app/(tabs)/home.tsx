@@ -24,34 +24,34 @@ const videos: Video[] = [
   {
     id: "1",
     title: "Exploring the World",
-    image: require("../assets/images/video1.png"),
+    image: require("../../assets/images/video1.png"),
     category: "News",
     time: "10 hrs ago",
   },
   {
     id: "2",
     title: "Cooking Masterclass",
-    image: require("../assets/images/video1.png"),
+    image: require("../../assets/images/video1.png"),
     category: "News",
     time: "12 hrs ago",
   },
   {
     id: "3",
     title: "Tech Innovations 2024",
-    image: require("../assets/images/video1.png"),
+    image: require("../../assets/images/video1.png"),
     category: "News",
     time: "8 hrs ago",
   },
   {
     id: "4",
     title: "Workout Motivation",
-    image: require("../assets/images/video1.png"),
+    image: require("../../assets/images/video1.png"),
     category: "News",
     time: "5 hrs ago",
   },
 ];
 
-export default function Homepage() {
+export default function home() {
   // Sửa lại renderItem với kiểu dữ liệu rõ ràng
   const renderVideoItem = ({ item }: { item: Video }) => (
     <View style={styles.videoItem}>
@@ -75,7 +75,7 @@ export default function Homepage() {
         <View style={styles.headerTop}>
           {/* Logo */}
           <Image
-            source={require("../assets/images/cat.png")}
+            source={require("../../assets/images/cat.png")}
             style={styles.logo}
           />
           {/* Greeting */}
@@ -114,7 +114,7 @@ export default function Homepage() {
       {/* Banner */}
       <View style={styles.banner}>
         <Image
-          source={require("../assets/images/banner.png")}
+          source={require("../../assets/images/banner.png")}
           style={styles.bannerImage}
         />
       </View>
@@ -123,20 +123,20 @@ export default function Homepage() {
       <View style={styles.categoryContainer}>
         <TouchableOpacity style={styles.categoryItem}>
           <Image
-            source={require("../assets/images/Listening.png")}
+            source={require("../../assets/images/Listening.png")}
             style={styles.categoryImage}
           />
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.categoryItem}>
           <Image
-            source={require("../assets/images/news.png")}
+            source={require("../../assets/images/news.png")}
             style={styles.categoryImage}
           />
         </TouchableOpacity>
         <TouchableOpacity style={styles.categoryItem}>
           <Image
-            source={require("../assets/images/Blog.png")}
+            source={require("../../assets/images/Blog.png")}
             style={styles.categoryImage}
           />
         </TouchableOpacity>
@@ -211,7 +211,7 @@ const styles = StyleSheet.create({
   },
   banner: {
     marginTop: 20,
-    borderRadius: 10,
+    borderRadius: 22,
     overflow: "hidden",
   },
   bannerImage: {
