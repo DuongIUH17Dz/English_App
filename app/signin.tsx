@@ -212,7 +212,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   signInButtonFilled: {
-    backgroundColor: "#91CDE7",
+    backgroundColor: "#2196F3",
   },
   signInButtonText: {
     color: "#fff",
