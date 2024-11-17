@@ -1,14 +1,16 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, TextInput, TouchableOpacity, View, Image } from 'react-native';
-import { FontAwesome } from '@expo/vector-icons';
+import { StyleSheet, Text, TextInput, TouchableOpacity, View, Image, Animated } from 'react-native';
+
 import { useState } from 'react';
 import { useRouter } from 'expo-router';
+import { FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
 
 export default function Signin() {
   const router = useRouter();
   const [focusedInput, setFocusedInput] = useState<string | null>(null);
   const [emailPhone, setEmailPhone] = useState('');
   const [password, setPassword] = useState('');
+  const [scale] = useState(new Animated.Value(1));  // Initial scale for icons
 
   // Check if both fields are filled
   const isFormFilled = emailPhone && password;
@@ -19,6 +21,20 @@ export default function Signin() {
     } else {
       alert("Please fill in all fields");
     }
+  };
+
+  const handlePressIn = () => {
+    Animated.spring(scale, {
+      toValue: 1.2,
+      useNativeDriver: true,
+    }).start();
+  };
+
+  const handlePressOut = () => {
+    Animated.spring(scale, {
+      toValue: 1,
+      useNativeDriver: true,
+    }).start();
   };
 
   return (
@@ -47,6 +63,10 @@ export default function Signin() {
         value={password}
         onChangeText={setPassword}
       />
+      {/* Forget Password */}
+      <TouchableOpacity>
+        <Text style={styles.forgetPassword}>Forget Password?</Text>
+      </TouchableOpacity>
 
       {/* Sign In button */}
       <TouchableOpacity 
@@ -56,20 +76,27 @@ export default function Signin() {
         <Text style={styles.signInButtonText}>Sign In</Text>
       </TouchableOpacity>
 
-      {/* Forget Password */}
-      <TouchableOpacity>
-        <Text style={styles.forgetPassword}>Forget Password?</Text>
-      </TouchableOpacity>
-
       {/* Or sign in with */}
       <Text style={styles.orText}>Or Sign in With</Text>
 
-      {/* Social media icons */}
+      {/* Social media icons with animation */}
       <View style={styles.socialIcons}>
-        <FontAwesome name="google" size={24} color="#DB4437" style={styles.icon} />
-        <FontAwesome name="facebook" size={24} color="#4267B2" style={styles.icon} />
-        <FontAwesome name="cloud" size={24} color="#007AFF" style={styles.icon} />
-      </View>
+  <TouchableOpacity style={styles.iconWrapper}  activeOpacity={1} onPressIn={handlePressIn} onPressOut={handlePressOut}>
+    <Animated.View style={{ transform: [{ scale }] }}>
+      <FontAwesome name="google" size={24} color="#DB4437" style={styles.icon} />
+    </Animated.View>
+  </TouchableOpacity>
+  <TouchableOpacity style={styles.iconWrapper} activeOpacity={1} onPressIn={handlePressIn} onPressOut={handlePressOut}>
+    <Animated.View style={{ transform: [{ scale }] }}>
+      <FontAwesome name="facebook" size={24} color="#4267B2" style={styles.icon} />
+    </Animated.View>
+  </TouchableOpacity>
+  <TouchableOpacity style={styles.iconWrapper}  activeOpacity={1} onPressIn={handlePressIn} onPressOut={handlePressOut}>
+    <Animated.View style={{ transform: [{ scale }] }}>
+      <MaterialCommunityIcons name="apple" size={24} color="#000" style={styles.icon} />
+    </Animated.View>
+  </TouchableOpacity>
+</View>
 
       <StatusBar style="auto" />
     </View>
@@ -82,13 +109,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 20,
+    padding: 30,
   },
   logo: {
-    width: 100,
-    height: 100,
+    width: 60,
+    height: 77,
     resizeMode: 'contain',
     marginBottom: 20,
+    marginTop:30
   },
   title: {
     fontSize: 48,
@@ -97,10 +125,11 @@ const styles = StyleSheet.create({
   },
   input: {
     width: '100%',
+    height:55.96,
     padding: 15,
-    borderWidth: 1,
+    borderWidth: 1.5,
     borderColor: '#ccc',
-    borderRadius: 14,
+    borderRadius: 14.23,
     marginBottom: 15,
     backgroundColor: '#F3F3F3'
   },
@@ -125,6 +154,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   forgetPassword: {
+    marginTop:7,
+    marginLeft:200,
     fontSize: 16,
     color: '#007AFF',
     marginBottom: 20,
@@ -139,7 +170,16 @@ const styles = StyleSheet.create({
     marginTop: 30,
     flexDirection: 'row',
     justifyContent: 'space-around',
-    width: '60%',
+    width: '80%',
+  },
+  iconWrapper: {
+    backgroundColor: '#D3D3D3', // Màu nền xám
+    width:65,
+    height:65,
+    borderRadius: 40, // Đảm bảo là hình tròn
+    padding: 10, // Khoảng cách giữa biểu tượng và viền hình tròn
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   icon: {
     marginHorizontal: 10,

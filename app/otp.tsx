@@ -11,7 +11,7 @@ export default function otp() {
       <Image source={require('.././assets/images/cat.png')} style={styles.logo} />
 
       {/* Phone Number */}
-      <Text style={styles.phoneText}>Phone Number: 1234</Text>
+      <Text style={styles.phoneText}>Phone Number: 0828012868</Text>
 
       {/* OTP message */}
       <Text style={styles.otpText}>OTP has been sent to your phone number</Text>
@@ -29,7 +29,7 @@ export default function otp() {
 
       {/* Resend OTP */}
       <Text style={styles.resendText} >
-        Resend OTP in s
+        Resend OTP in 60s
       </Text>
 
       <StatusBar style="auto" />
