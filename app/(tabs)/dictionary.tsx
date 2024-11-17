@@ -1,10 +1,10 @@
 import React from 'react'
 import { View, Text } from 'react-native'
 
-export default function practice () {
+export default function dictionary () {
   return (
     <View>
-       <Text>Practice </Text>
+       <Text>Dictionary </Text>
     </View>
   )
 }
