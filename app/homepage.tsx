@@ -7,10 +7,67 @@ import {
   TextInput,
   TouchableOpacity,
   ScrollView,
+  FlatList,
 } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 
+// Định nghĩa kiểu dữ liệu cho mỗi video
+interface Video {
+  id: string;
+  title: string;
+  image: any; // Hoặc bạn có thể thay "any" bằng kiểu dữ liệu cụ thể nếu muốn (ví dụ: ImageSourcePropType từ react-native)
+  category: string;
+  time: string;
+}
+
+const videos: Video[] = [
+  {
+    id: "1",
+    title: "Exploring the World",
+    image: require("../assets/images/video1.png"),
+    category: "News",
+    time: "10 hrs ago",
+  },
+  {
+    id: "2",
+    title: "Cooking Masterclass",
+    image: require("../assets/images/video1.png"),
+    category: "News",
+    time: "12 hrs ago",
+  },
+  {
+    id: "3",
+    title: "Tech Innovations 2024",
+    image: require("../assets/images/video1.png"),
+    category: "News",
+    time: "8 hrs ago",
+  },
+  {
+    id: "4",
+    title: "Workout Motivation",
+    image: require("../assets/images/video1.png"),
+    category: "News",
+    time: "5 hrs ago",
+  },
+];
+
 export default function Homepage() {
+  // Sửa lại renderItem với kiểu dữ liệu rõ ràng
+  const renderVideoItem = ({ item }: { item: Video }) => (
+    <View style={styles.videoItem}>
+      
+      <View style={styles.videoInfo}>
+        <Text style={styles.videoTitle}>{item.title}</Text>
+        <View style={{flexDirection:'row',alignItems:'center'}}>
+          <Text style={styles.videoCategory}> {item.category}</Text>
+        <Text style={styles.videoTime}>{item.time}</Text>
+        </View>
+        
+      </View>
+      <Image source={item.image} style={styles.videoImage} />
+    </View>
+  );
+
   return (
     <ScrollView style={styles.container}>
       {/* Header */}
@@ -30,16 +87,24 @@ export default function Homepage() {
           <TouchableOpacity>
             <FontAwesome name="bell" size={24} color="#000" />
           </TouchableOpacity>
-          
         </View>
-        <Text style={{ width:88,height:23,fontSize:18,marginTop:17,marginLeft:2,marginBottom:-8,fontWeight: 'bold'}}>Dictionary</Text>
+        <Text
+          style={{
+            width: 88,
+            height: 23,
+            fontSize: 18,
+            marginTop: 17,
+            marginLeft: 2,
+            marginBottom: -8,
+            fontWeight: "bold",
+          }}
+        >
+          Dictionary
+        </Text>
 
         {/* Search */}
         <View style={styles.searchContainer}>
-          <TextInput
-            placeholder="Search"
-            style={styles.searchInput}
-          />
+          <TextInput placeholder="Search" style={styles.searchInput} />
           <TouchableOpacity style={styles.searchButton}>
             <FontAwesome name="search" size={20} color="#fff" />
           </TouchableOpacity>
@@ -77,15 +142,15 @@ export default function Homepage() {
         </TouchableOpacity>
       </View>
 
-      {/* Viral Video */}
-      <View style={styles.video}>
-        <Text style={styles.sectionTitle}>Viral Video</Text>
-        <TouchableOpacity style={styles.videoThumbnail}>
-          <Image
-            source={require("../assets/images/banner.png")}
-            style={styles.videoImage}
-          />
-        </TouchableOpacity>
+      {/* Viral Videos */}
+      <View style={styles.videoSection}>
+        <Text style={styles.sectionTitle}>Viral Videos</Text>
+        <FlatList
+          data={videos}
+          renderItem={renderVideoItem}
+          keyExtractor={(item) => item.id}
+          showsVerticalScrollIndicator={false}
+        />
       </View>
     </ScrollView>
   );
@@ -101,7 +166,7 @@ const styles = StyleSheet.create({
     marginTop: 40,
   },
   headerTop: {
-    marginLeft:10,
+    marginLeft: 10,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
@@ -124,13 +189,13 @@ const styles = StyleSheet.create({
     color: "#777",
   },
   searchContainer: {
-    marginLeft:8,
+    marginLeft: 8,
     flexDirection: "row",
     marginTop: 20,
   },
   searchInput: {
     flex: 1,
-    width:350,
+    width: 350,
     borderWidth: 1,
     borderColor: "#ccc",
     borderRadius: 14.45,
@@ -160,7 +225,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   categoryContainer: {
-    width:380,
+    width: 380,
     flexDirection: "row",
     marginTop: 20,
   },
@@ -174,16 +239,39 @@ const styles = StyleSheet.create({
     height: 50,
     resizeMode: "contain",
   },
-  video: {
+  videoSection: {
     marginTop: 30,
   },
-  videoThumbnail: {
+  videoItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 15,
+    backgroundColor: "#f9f9f9",
+    padding: 10,
     borderRadius: 10,
-    overflow: "hidden",
   },
   videoImage: {
-    width: "100%",
-    height: 200,
-    resizeMode: "cover",
+    width: 70,
+    height: 70,
+    borderRadius: 10,
+  },
+  videoInfo: {
+    flex: 1,
+    marginLeft: 5,
+  },
+  videoTitle: {
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+  videoCategory: {
+    fontSize: 14,
+    color: "#666",
+    marginTop: 5,
+  },
+  videoTime: {
+    fontSize: 12,
+    color: "#aaa",
+    marginLeft:10,
+    marginTop: 8,
   },
 });
