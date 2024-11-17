@@ -24,7 +24,7 @@ export default function Signin() {
 
   const handleSignIn = () => {
     if (isFormFilled) {
-      router.push("/signup");
+      router.push("/home");
     } else {
       alert("Please fill in all fields");
     }
@@ -91,6 +91,11 @@ export default function Signin() {
       >
         <Text style={styles.signInButtonText}>Sign In</Text>
       </TouchableOpacity>
+
+      <TouchableOpacity onPress={() => router.push("/signup")}>
+        <Text style={styles.signup}>Don't have account? Sign up here!</Text>
+      </TouchableOpacity>
+
 
       {/* Or sign in with */}
       <Text style={styles.orText}>Or Sign in With</Text>
@@ -203,11 +208,11 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     width: "100%",
     borderRadius: 10,
-    marginTop: 10,
+    marginTop: 5,
     marginBottom: 20,
   },
   signInButtonFilled: {
-    backgroundColor: "#2196F3",
+    backgroundColor: "#91CDE7",
   },
   signInButtonText: {
     color: "#fff",
@@ -216,11 +221,15 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   forgetPassword: {
-    marginTop: 7,
     marginLeft: 200,
     fontSize: 16,
     color: "#007AFF",
-    marginBottom: 20,
+    marginBottom: 10,
+  },
+  signup: {
+    marginTop: 7,
+    fontSize: 16,
+    color: "#007AFF",
   },
   orText: {
     marginTop: 20,

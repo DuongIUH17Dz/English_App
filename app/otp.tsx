@@ -16,7 +16,7 @@ export default function Otp() {
 
   const handleVerify = () => {
     // Điều hướng tới trang homepage
-    router.push("/homepage");
+    router.push("/home");
   };
 
   return (
