@@ -1,8 +1,5 @@
 import React from "react";
 import { Tabs } from "expo-router";
-import Ionicons from "@expo/vector-icons/Ionicons";
-import Entypo from "@expo/vector-icons/Entypo";
-import AntDesign from "@expo/vector-icons/AntDesign";
 import Svg, { Path } from "react-native-svg";
 
 export default function TabLayout() {
