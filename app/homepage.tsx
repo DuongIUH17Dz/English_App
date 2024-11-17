@@ -54,23 +54,27 @@ export default function Homepage() {
         />
       </View>
 
-      {/* Category */}
-      <View style={styles.category}>
-        <Text style={styles.sectionTitle}>Category</Text>
-        <View style={styles.categoryContainer}>
-          <TouchableOpacity style={styles.categoryItem}>
-            <FontAwesome name="music" size={20} color="#fff" />
-            <Text style={styles.categoryText}>Music</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.categoryItem}>
-            <FontAwesome name="film" size={20} color="#fff" />
-            <Text style={styles.categoryText}>Movies</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.categoryItem}>
-            <FontAwesome name="book" size={20} color="#fff" />
-            <Text style={styles.categoryText}>Books</Text>
-          </TouchableOpacity>
-        </View>
+      {/* Updated Section */}
+      <View style={styles.categoryContainer}>
+        <TouchableOpacity style={styles.categoryItem}>
+          <Image
+            source={require("../assets/images/Listening.png")}
+            style={styles.categoryImage}
+          />
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.categoryItem}>
+          <Image
+            source={require("../assets/images/news.png")}
+            style={styles.categoryImage}
+          />
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.categoryItem}>
+          <Image
+            source={require("../assets/images/Blog.png")}
+            style={styles.categoryImage}
+          />
+        </TouchableOpacity>
       </View>
 
       {/* Viral Video */}
@@ -150,30 +154,25 @@ const styles = StyleSheet.create({
     height: 200,
     resizeMode: "cover",
   },
-  category: {
-    marginTop: 30,
-  },
   sectionTitle: {
     fontSize: 18,
     fontWeight: "bold",
     marginBottom: 10,
   },
   categoryContainer: {
+    width:380,
     flexDirection: "row",
-    justifyContent: "space-between",
+    marginTop: 20,
   },
   categoryItem: {
-    backgroundColor: "#4CAF50",
-    borderRadius: 8,
-    padding: 15,
+    flex: 1,
     alignItems: "center",
-    justifyContent: "center",
-    width: 100,
+    marginHorizontal: 5,
   },
-  categoryText: {
-    marginTop: 5,
-    color: "#fff",
-    fontSize: 14,
+  categoryImage: {
+    width: 40,
+    height: 50,
+    resizeMode: "contain",
   },
   video: {
     marginTop: 30,
