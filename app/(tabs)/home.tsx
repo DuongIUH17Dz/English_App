@@ -55,14 +55,12 @@ export default function home() {
   // Sửa lại renderItem với kiểu dữ liệu rõ ràng
   const renderVideoItem = ({ item }: { item: Video }) => (
     <View style={styles.videoItem}>
-      
       <View style={styles.videoInfo}>
         <Text style={styles.videoTitle}>{item.title}</Text>
-        <View style={{flexDirection:'row',alignItems:'center'}}>
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
           <Text style={styles.videoCategory}> {item.category}</Text>
-        <Text style={styles.videoTime}>{item.time}</Text>
+          <Text style={styles.videoTime}>{item.time}</Text>
         </View>
-        
       </View>
       <Image source={item.image} style={styles.videoImage} />
     </View>
@@ -143,14 +141,20 @@ export default function home() {
       </View>
 
       {/* Viral Videos */}
+
       <View style={styles.videoSection}>
-        <Text style={styles.sectionTitle}>Viral Videos</Text>
-        <FlatList
-          data={videos}
-          renderItem={renderVideoItem}
-          keyExtractor={(item) => item.id}
-          showsVerticalScrollIndicator={false}
-        />
+        {videos.map((item) => (
+          <View key={item.id} style={styles.videoItem}>
+            <View style={styles.videoInfo}>
+              <Text style={styles.videoTitle}>{item.title}</Text>
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <Text style={styles.videoCategory}>{item.category}</Text>
+                <Text style={styles.videoTime}>{item.time}</Text>
+              </View>
+            </View>
+            <Image source={item.image} style={styles.videoImage} />
+          </View>
+        ))}
       </View>
     </ScrollView>
   );
@@ -271,7 +275,7 @@ const styles = StyleSheet.create({
   videoTime: {
     fontSize: 12,
     color: "#aaa",
-    marginLeft:10,
+    marginLeft: 10,
     marginTop: 8,
   },
 });

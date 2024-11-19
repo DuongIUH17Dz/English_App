@@ -85,13 +85,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   profileSection: {
-    
+   marginTop: 20,
     alignItems: 'center',
     padding: 20,
     borderBottomWidth: 1,
     borderBottomColor: '#e0e0e0',
   },
   profileImage: {
+    marginTop: 20,
     width: 80,
     height: 80,
     borderRadius: 40,
