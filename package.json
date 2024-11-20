@@ -28,6 +28,7 @@
     "expo-status-bar": "~1.12.1",
     "expo-system-ui": "~3.0.7",
     "expo-web-browser": "~13.0.3",
+    "framer-motion": "^11.11.17",
     "learnenglish_app": "file:",
     "lucide-react": "^0.460.0",
     "lucide-react-native": "^0.460.0",

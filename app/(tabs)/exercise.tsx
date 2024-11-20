@@ -23,7 +23,7 @@ export default function exercise() {
         onPress={handleQuizPress}
       >
         <LinearGradient
-          colors={['#8B7EF8', '#6F60F7']}
+          colors={['#8B7EF8', '#6F60F7']} 
           style={styles.button}
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 1 }}
