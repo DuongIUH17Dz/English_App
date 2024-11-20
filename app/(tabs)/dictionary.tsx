@@ -167,8 +167,8 @@ export default function dictionary() {
       {/* Word List */}
       <ScrollView style={styles.wordList}>
         {words.map((word, index) => (
-          <TouchableOpacity onPress={handleWordPress}>
-            <View key={index} style={styles.wordItem}>
+          <TouchableOpacity key={index} onPress={handleWordPress}>
+            <View style={styles.wordItem}>
               <Text style={styles.wordText}>{word}</Text>
               <TouchableOpacity>
                 <Bookmark size={20} color="#64B5F6" />

@@ -10,6 +10,10 @@ export default function exercise() {
     router.push("/details/quizGame");
   };
 
+  const handleFlashCardPress = () => {
+    router.push("/details/flashcard");
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Exercise</Text>
@@ -28,10 +32,9 @@ export default function exercise() {
           <Text style={styles.buttonText}>Quiz</Text>
         </LinearGradient>
       </TouchableOpacity>
-
       <TouchableOpacity 
         style={styles.buttonContainer}
-        onPress={() => console.log('Flashcard pressed')}
+        onPress={handleFlashCardPress}
       >
         <LinearGradient
           colors={['#B85E50', '#A04B3E']}

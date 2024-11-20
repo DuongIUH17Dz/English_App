@@ -6,7 +6,8 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from "react-native";
-import { ChevronLeft } from "lucide-react-native";
+
+import { useRouter } from "expo-router";
 
 interface QuizCategory {
   id: string;
@@ -52,18 +53,21 @@ const categories: QuizCategory[] = [
 ];
 
 export default function QuizGame() {
+  const router = useRouter();
+
+  const handleQuizDetailsPress = () => {
+    router.push("/details/quizDetails");
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity style={styles.backButton}>
-          <ChevronLeft size={24} color="#000" />
-        </TouchableOpacity>
         <Text style={styles.headerTitle}>Quiz Game</Text>
       </View>
 
       <ScrollView style={styles.scrollView}>
         {categories.map((category, index) => (
-          <TouchableOpacity key={category.id} style={styles.categoryContainer}>
+          <TouchableOpacity key={category.id} style={styles.categoryContainer} onPress={handleQuizDetailsPress}>
             <View style={styles.categoryContent}>
               <Text style={styles.categoryIcon}>{category.icon}</Text>
               <View style={styles.categoryInfo}>
@@ -106,13 +110,9 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: "#E5E5E5",
   },
-  backButton: {
-    padding: 8,
-  },
   headerTitle: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: "600",
-    marginLeft: 8,
     textAlign: "center",
     flex: 1,
   },
