@@ -112,7 +112,7 @@ export default function home() {
       {/* Banner */}
       <View style={styles.banner}>
         <Image
-          source={require("../../assets/images/banner.png")}
+          source={require("../../assets/images/banner1.png")}
           style={styles.bannerImage}
         />
       </View>
@@ -124,6 +124,7 @@ export default function home() {
             source={require("../../assets/images/Listening.png")}
             style={styles.categoryImage}
           />
+          <Text style={{fontSize:10.63}}>Listening</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.categoryItem}>
@@ -131,12 +132,14 @@ export default function home() {
             source={require("../../assets/images/news.png")}
             style={styles.categoryImage}
           />
+          <Text style={{fontSize:10.63}}>News</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.categoryItem}>
           <Image
             source={require("../../assets/images/Blog.png")}
             style={styles.categoryImage}
           />
+          <Text style={{fontSize:10.63}}>Blog</Text>
         </TouchableOpacity>
       </View>
 
@@ -150,7 +153,7 @@ export default function home() {
               <View style={{ flexDirection: "row", alignItems: "center" }}>
                 <Text style={styles.videoCategory}>{item.category}</Text>
                 <Text style={styles.videoTime}>{item.time}</Text>
-              </View>
+              </View> 
             </View>
             <Image source={item.image} style={styles.videoImage} />
           </View>
@@ -269,7 +272,7 @@ const styles = StyleSheet.create({
   },
   videoCategory: {
     fontSize: 14,
-    color: "#666",
+    color: "#167F71",
     marginTop: 5,
   },
   videoTime: {
