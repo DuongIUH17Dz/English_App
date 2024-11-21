@@ -1,4 +1,5 @@
 import React from "react";
+import { useRouter } from "expo-router";
 import {
   View,
   Text,
@@ -52,6 +53,16 @@ const videos: Video[] = [
 ];
 
 export default function home() {
+  const router = useRouter();
+
+  const handleListenPress = () => {
+   router.push("/details/listen")
+  };
+
+  const handleNewsPress = () => {
+    router.push("/details/flashcard");
+  };
+
   // Sửa lại renderItem với kiểu dữ liệu rõ ràng
   const renderVideoItem = ({ item }: { item: Video }) => (
     <View style={styles.videoItem}>
@@ -119,10 +130,11 @@ export default function home() {
 
       {/* Updated Section */}
       <View style={styles.categoryContainer}>
-        <TouchableOpacity style={styles.categoryItem}>
+        <TouchableOpacity style={styles.categoryItem} onPress={handleListenPress}>
           <Image
             source={require("../../assets/images/Listening.png")}
             style={styles.categoryImage}
+
           />
           <Text style={{fontSize:10.63}}>Listening</Text>
         </TouchableOpacity>
