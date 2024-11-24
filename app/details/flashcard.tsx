@@ -9,30 +9,51 @@ import {
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
+import { ChevronLeft } from "lucide-react-native";
+import { useNavigation } from "expo-router";
 
 export default function FlashCard() {
+  const navigation = useNavigation();
   const router = useRouter();
 
-  const handleFlashCardDetailsPress = () => {
-    router.push("/details/flashcardDetails");
+  // Handle navigation to detailed flashcard view for each deck
+  const handleFlashCardDetailsPress = (deckId: number) => {
+    router.push(`/details/flashcardDetails?id=${deckId}`);
   };
 
-  const flashcards = Array.from({ length: 6 }, (_, i) => ({
-    id: i + 1,
-    title: `Flash card ${i + 1}`,
-  }));
+  const flashcards = [
+    {
+      id: 1,
+      title: "Flashcard Set 1",
+    },
+    {
+      id: 2,
+      title: "Flashcard Set 2",
+    },
+    {
+      id: 3,
+      title: "Flashcard Set 3",
+    },
+  ];
 
   return (
     <View style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
-        <Text style={styles.headerTitle}>Flashcard</Text>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <ChevronLeft size={24} color="#000" />
+        </TouchableOpacity>
+        <Text style={styles.headerTitle}>Flashcards</Text>
       </View>
 
       {/* Flashcard List */}
       <ScrollView style={styles.scrollView}>
         {flashcards.map((card) => (
-          <TouchableOpacity key={card.id} style={styles.cardContainer} onPress={handleFlashCardDetailsPress}>
+          <TouchableOpacity
+            key={card.id}
+            style={styles.cardContainer}
+            onPress={() => handleFlashCardDetailsPress(card.id)}
+          >
             <LinearGradient
               colors={["#4773B4", "#767676"]}
               start={{ x: 0, y: 0 }}

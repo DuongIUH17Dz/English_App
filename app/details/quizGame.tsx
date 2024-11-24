@@ -6,7 +6,9 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from "react-native";
-
+import { ChevronLeft} from 'lucide-react-native';
+import { useNavigation } from "expo-router";
+import { NavigationProp } from "@react-navigation/native";
 import { useRouter } from "expo-router";
 
 interface QuizCategory {
@@ -53,21 +55,25 @@ const categories: QuizCategory[] = [
 ];
 
 export default function QuizGame() {
+  const navigation = useNavigation<NavigationProp<any>>();
   const router = useRouter();
 
-  const handleQuizDetailsPress = () => {
-    router.push("/details/quizDetails");
+  const handleQuizDetailsPress = (id: string, title: string) => {
+    router.push(`/details/quizDetails?id=${id}&title=${title}`);
   };
-
+  
   return (
     <View style={styles.container}>
       <View style={styles.header}>
+      <TouchableOpacity onPress={() => navigation.goBack()}>
+          <ChevronLeft size={24} color="#000" />
+        </TouchableOpacity>
         <Text style={styles.headerTitle}>Quiz Game</Text>
       </View>
 
       <ScrollView style={styles.scrollView}>
         {categories.map((category, index) => (
-          <TouchableOpacity key={category.id} style={styles.categoryContainer} onPress={handleQuizDetailsPress}>
+          <TouchableOpacity key={category.id} onPress={() => handleQuizDetailsPress(category.id, category.title)}>
             <View style={styles.categoryContent}>
               <Text style={styles.categoryIcon}>{category.icon}</Text>
               <View style={styles.categoryInfo}>
@@ -118,6 +124,7 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     flex: 1,
+    paddingHorizontal: 10
   },
   categoryContainer: {
     paddingHorizontal: 16,

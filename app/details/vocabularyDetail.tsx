@@ -8,8 +8,10 @@ import {
   StyleSheet,
 } from 'react-native';
 import { ChevronLeft, Bookmark, Volume2 } from 'lucide-react-native';
+import { useNavigation } from 'expo-router';
 
 export default function vocabularyDetail() {
+  const navigation = useNavigation();
   const relatedWords = [
     'Anteater',
     'Armadillo',
@@ -28,7 +30,7 @@ export default function vocabularyDetail() {
   return (
     <ScrollView style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
           <ChevronLeft size={24} color="#000" />
         </TouchableOpacity>
         <Text style={styles.title}>Aardvark</Text>

@@ -8,6 +8,7 @@ import {
   Animated,
   PanResponder,
 } from 'react-native';
+import { useLocalSearchParams } from "expo-router";
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
@@ -16,15 +17,37 @@ interface Card {
   text: string;
 }
 
-const cards: Card[] = [
-  { id: 1, text: 'Hello' },
-  { id: 2, text: 'World' },
-  { id: 3, text: 'Learn' },
-];
+const decks: { [key: number]: Card[] } = {
+  1: [
+    { id: 1, text: 'Lion' },
+    { id: 2, text: 'Elephant' },
+    { id: 3, text: 'Zebra' },
+    { id: 4, text: 'Giraffe' },
+    { id: 5, text: 'Tiger' },
+  ],
+  2: [
+    { id: 1, text: 'Pizza' },
+    { id: 2, text: 'Burger' },
+    { id: 3, text: 'Pasta' },
+    { id: 4, text: 'Salad' },
+    { id: 5, text: 'Sushi' },
+  ],
+  3: [
+    { id: 1, text: 'Painting' },
+    { id: 2, text: 'Sculpture' },
+    { id: 3, text: 'Music' },
+    { id: 4, text: 'Dance' },
+    { id: 5, text: 'Poetry' },
+  ],
+};
 
 export default function FlashcardDetails() {
+  const { id } = useLocalSearchParams();
   const [currentIndex, setCurrentIndex] = useState(0);
   const position = useRef(new Animated.ValueXY()).current;
+
+  const currentDeck = decks[parseInt(id as string)] || [];
+  const currentCard = currentDeck[currentIndex];
 
   const panResponder = useRef(
     PanResponder.create({
@@ -53,9 +76,9 @@ export default function FlashcardDetails() {
     }).start(() => {
       setCurrentIndex((prevIndex) => {
         if (direction === 'right') {
-          return prevIndex === cards.length - 1 ? 0 : prevIndex + 1;
+          return prevIndex === currentDeck.length - 1 ? 0 : prevIndex + 1;
         } else {
-          return prevIndex === 0 ? cards.length - 1 : prevIndex - 1;
+          return prevIndex === 0 ? currentDeck.length - 1 : prevIndex - 1;
         }
       });
       position.setValue({ x: 0, y: 0 });
@@ -67,10 +90,6 @@ export default function FlashcardDetails() {
       toValue: { x: 0, y: 0 },
       useNativeDriver: false,
     }).start();
-  };
-
-  const handleNext = () => {
-    swipeCard('right');
   };
 
   const getCardStyle = () => {
@@ -87,16 +106,16 @@ export default function FlashcardDetails() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Flash card 1</Text>
+      <Text style={styles.title}>Flashcard Set {id}</Text>
       <View style={styles.cardContainer}>
         <Animated.View
           {...panResponder.panHandlers}
           style={[styles.card, getCardStyle()]}
         >
-          <Text style={styles.cardText}>{cards[currentIndex].text}</Text>
+          <Text style={styles.cardText}>{currentCard.text}</Text>
         </Animated.View>
       </View>
-      <TouchableOpacity style={styles.button} onPress={handleNext}>
+      <TouchableOpacity style={styles.button} onPress={() => swipeCard('right')}>
         <Text style={styles.buttonText}>Next</Text>
       </TouchableOpacity>
     </View>
@@ -113,7 +132,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 20,
-    marginTop: 20
+    marginTop: 20,
   },
   cardContainer: {
     flex: 1,

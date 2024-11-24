@@ -25,6 +25,7 @@ export default function dictionary() {
     "Ability",
     "Abject",
     "Abnormal",
+    "Test"
   ];
 
   const categories = [
