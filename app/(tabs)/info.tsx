@@ -64,9 +64,6 @@ export default function ProfileSettings() {
 
         <View style={styles.settingsSection}>
           <SettingsItem icon={User} title="Edit Profile" onPress={() => console.log('Edit Profile')} />
-          <SettingsItem icon={CreditCard} title="Payment Option" onPress={() => console.log('Payment Option')} />
-          <SettingsItem icon={Bell} title="Notifications" onPress={() => console.log('Notifications')} />
-          <SettingsItem icon={Lock} title="Security" onPress={() => console.log('Security')} />
           <SettingsItem icon={Globe} title="Language" value="English (US)" onPress={() => console.log('Language')} />
           <SettingsItem icon={Moon} title="Dark Mode" onPress={() => console.log('Dark Mode')} />
           <SettingsItem icon={FileText} title="Terms & Conditions" onPress={() => console.log('Terms & Conditions')} />

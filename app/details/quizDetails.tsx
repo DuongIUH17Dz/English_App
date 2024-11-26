@@ -11,6 +11,7 @@ import { Volume2 } from "lucide-react-native";
 import { useNavigation } from "expo-router";
 import { NavigationProp } from "@react-navigation/native";
 import { useLocalSearchParams } from "expo-router";
+import * as Speech from 'expo-speech';
 
 const vocabulary = {
   "1": [
@@ -119,6 +120,17 @@ export default function QuizDetails() {
   
   const currentVocabulary = vocabulary[id as keyof typeof vocabulary] || [];
   const currentWord = currentVocabulary[currentIndex] || {};
+
+  const playPronunciation = () => {
+    let pronunciation = currentWord.word;
+
+    try {
+      Speech.speak(pronunciation);
+    } catch (error) {
+      console.error("Error playing pronunciation:", error);
+      alert("Error playing pronunciation. Please check your device settings.");
+    }
+  };
   
   const handleImagePress = (index: number, correct: boolean) => {
     setSelectedImage(index);
@@ -152,7 +164,7 @@ export default function QuizDetails() {
         <Text style={styles.word}>{currentWord.word}</Text>
         <View style={styles.wordContainer}>
           <Text style={styles.pronoun}>{currentWord.pronoun}</Text>
-          <TouchableOpacity onPress={() => console.log("Playing sound")}>
+          <TouchableOpacity onPress={() => playPronunciation()}>
             <Volume2 size={24} color="#2ABAFF" />
           </TouchableOpacity>
         </View>

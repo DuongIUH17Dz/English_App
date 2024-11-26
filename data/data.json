@@ -1,0 +1,15 @@
+{
+    "listening": [
+      { "id": 1, "title": "Listening 1", "image": "image1.jpg", "content": "Content for Listening 1" },
+      { "id": 2, "title": "Listening 2", "image": "image2.jpg", "content": "Content for Listening 2" }
+    ],
+    "news": [
+      { "id": 1, "title": "News 1", "image": "image1.jpg", "content": "Content for News 1", "category": "Category 1" },
+      { "id": 2, "title": "News 2", "image": "image2.jpg", "content": "Content for News 2", "category": "Category 2" }
+    ],
+    "categories": [
+      { "id": 1, "title": "Category 1" },
+      { "id": 2, "title": "Category 2" }
+    ]
+  }
+  

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {
   View,
   Text,
@@ -13,29 +13,70 @@ import { useRouter } from "expo-router";
 
 export default function dictionary() {
   const router = useRouter();
+  const [selectedWord, setSelectedWord] = useState(null);
 
-  const words = [
-    "Aardvark",
-    "Abandon",
-    "Abate",
-    "Abbey",
-    "Abdomen",
-    "Abduct",
-    "Abide",
-    "Ability",
-    "Abject",
-    "Abnormal",
-    "Test"
+  interface Word {
+    word: string;
+    definition: string;
+    relatedWords: string[];
+    category: string;
+    pronunciation: {
+      UK: string; 
+    };
+    image: string; 
+  }
+  
+  const words: Word[] = [
+    {
+      word: "Aardvark",
+      definition: "A nocturnal mammal native to Africa, known for digging with its large claws.",
+      relatedWords: ["Ant", "Burrow", "Insectivore"],
+      category: "Animal",
+      pronunciation: {
+        UK: "/ˈɑːd.vɑːk/",
+      },
+      image: "https://b-cdn.springnest.com/media/img/9u/aardvarke131f0a.jpg"
+    },
+    {
+      word: "Abandon",
+      definition: "To leave behind or forsake someone or something.",
+      relatedWords: ["Desert", "Forsake", "Leave"],
+      category: "Action",
+      pronunciation: {
+        UK: "/əˈbæn.dən/",
+      },
+      image: "https://example.com/abandon-image.png"
+    },
+    {
+      word: "Abate",
+      definition: "To reduce or lessen in degree, intensity, or severity.",
+      relatedWords: ["Diminish", "Decrease", "Reduce"],
+      category: "Action",
+      pronunciation: {
+        UK: "/əˈbeɪt/",
+      },
+      image: "https://example.com/abate-image.png"
+    },
+    {
+      word: "Abbey",
+      definition: "A building or complex of buildings used by a religious community, especially monks.",
+      relatedWords: ["Monastery", "Church", "Convent"],
+      category: "Place",
+      pronunciation: {
+        UK: "/ˈæb.i/",
+      },
+      image: "https://cdn.britannica.com/12/144312-050-B06DACFC/Dominican-abbey-Santa-Maria-da-Vitoria-Portugal.jpg"
+    },
   ];
-
+  
   const categories = [
     { id: 1, name: "Popular", selected: true },
     { id: 2, name: "Daily routine", selected: false },
     { id: 3, name: "Family", selected: false },
   ];
 
-  const handleWordPress = () => {
-    router.push("/details/vocabularyDetail");
+  const handleWordPress = (word: Object) => {
+    router.push(`/details/vocabularyDetail?word=${JSON.stringify(word)}`);
   };
 
   const handleWordSaved = () => {
@@ -73,51 +114,6 @@ export default function dictionary() {
             placeholder="Search for Words"
             style={styles.searchInput}
           />
-          <TouchableOpacity>
-            <Svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              style={styles.searchIcon}
-            >
-              <Path
-                d="M12 15.5C14.21 15.5 16 13.71 16 11.5V6C16 3.79 14.21 2 12 2C9.79 2 8 3.79 8 6V11.5C8 13.71 9.79 15.5 12 15.5Z"
-                stroke="#868686"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <Path
-                d="M4.35001 9.65002V11.35C4.35001 15.57 7.78001 19 12 19C16.22 19 19.65 15.57 19.65 11.35V9.65002"
-                stroke="#868686"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <Path
-                d="M10.61 6.43C11.51 6.1 12.49 6.1 13.39 6.43"
-                stroke="#868686"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <Path
-                d="M11.2 8.54995C11.73 8.40995 12.28 8.40995 12.81 8.54995"
-                stroke="#868686"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <Path
-                d="M12 19V22"
-                stroke="#868686"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </Svg>
-          </TouchableOpacity>
         </View>
         <TouchableOpacity onPress={handleWordSaved}>
           <Svg
@@ -168,9 +164,9 @@ export default function dictionary() {
       {/* Word List */}
       <ScrollView style={styles.wordList}>
         {words.map((word, index) => (
-          <TouchableOpacity key={index} onPress={handleWordPress}>
+          <TouchableOpacity activeOpacity={1}key={index} onPress={() => handleWordPress(word)}>
             <View style={styles.wordItem}>
-              <Text style={styles.wordText}>{word}</Text>
+              <Text style={styles.wordText}>{word.word}</Text>
               <TouchableOpacity>
                 <Bookmark size={20} color="#64B5F6" />
               </TouchableOpacity>
@@ -258,9 +254,9 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginBottom: 10,
     backgroundColor: "#fff",
-    shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.1,
     shadowRadius: 2,
+    elevation: 1,
   },
   wordText: {
     fontSize: 18,

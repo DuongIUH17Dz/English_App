@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { ChevronLeft, Bookmark, Volume2 } from "lucide-react-native";
 import Svg, { Path } from "react-native-svg";
+import { useNavigation } from "expo-router";
 
 export default function vocabularySaved() {
   const words = [
@@ -24,10 +25,12 @@ export default function vocabularySaved() {
     "Abnormal",
   ];
 
+  const navigation = useNavigation();
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
           <ChevronLeft size={24} color="#000" />
         </TouchableOpacity>
         <Text style={styles.title}>Saved</Text>
@@ -91,6 +94,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.1,
     shadowRadius: 2,
+    elevation: 3,
   },
   wordText: {
     fontSize: 18,

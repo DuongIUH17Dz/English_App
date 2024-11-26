@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from "react";
 import {
   View,
   Text,
@@ -6,25 +6,27 @@ import {
   TouchableOpacity,
   ScrollView,
   StyleSheet,
-} from 'react-native';
-import { ChevronLeft, Bookmark, Volume2 } from 'lucide-react-native';
-import { useNavigation } from 'expo-router';
+} from "react-native";
+import { ChevronLeft, Bookmark, Volume2 } from "lucide-react-native";
+import { useNavigation } from "expo-router";
+import { useRouter } from "expo-router";
+import { useLocalSearchParams } from "expo-router";
+import * as Speech from "expo-speech";
 
 export default function vocabularyDetail() {
   const navigation = useNavigation();
-  const relatedWords = [
-    'Anteater',
-    'Armadillo',
-    'Bandicoot',
-    'Grizzly bear',
-    'Javelina',
-    'Peccary',
-    'Tamandua',
-    'Hippopotamus',
-  ];
+  const { word: wordParam } = useLocalSearchParams();
+  const word = JSON.parse(typeof wordParam === "string" ? wordParam : "{}");
 
-  const playPronunciation = (type: 'UK' | 'US') => {
-    console.log(`Playing ${type} pronunciation`);
+  const playPronunciation = () => {
+    let pronunciation = word.word;
+
+    try {
+      Speech.speak(pronunciation);
+    } catch (error) {
+      console.error("Error playing pronunciation:", error);
+      alert("Error playing pronunciation. Please check your device settings.");
+    }
   };
 
   return (
@@ -33,30 +35,19 @@ export default function vocabularyDetail() {
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <ChevronLeft size={24} color="#000" />
         </TouchableOpacity>
-        <Text style={styles.title}>Aardvark</Text>
+        <Text style={styles.title}>{word.word}</Text>
         <TouchableOpacity>
           <Bookmark size={24} color="#5FABCC" />
         </TouchableOpacity>
       </View>
 
-      <Image
-        source={{ uri: '/placeholder.svg?height=200&width=300' }}
-        style={styles.image}
-      />
+      <Image source={{ uri: word.image }} style={styles.image} />
 
       <View style={styles.pronunciationContainer}>
         <View style={styles.pronunciationRow}>
           <Text style={styles.region}>UK</Text>
-          <Text style={styles.pronunciation}>/ɑːdvɑːk/</Text>
-          <TouchableOpacity onPress={() => playPronunciation('UK')}>
-            <Volume2 size={20} color="#5FABCC" />
-          </TouchableOpacity>
-        </View>
-
-        <View style={styles.pronunciationRow}>
-          <Text style={styles.region}>US</Text>
-          <Text style={styles.pronunciation}>/ɑrd.vɑrk/</Text>
-          <TouchableOpacity onPress={() => playPronunciation('US')}>
+          <Text style={styles.pronunciation}>{word.pronunciation.UK}</Text>
+          <TouchableOpacity onPress={() => playPronunciation()}>
             <Volume2 size={20} color="#5FABCC" />
           </TouchableOpacity>
         </View>
@@ -64,20 +55,33 @@ export default function vocabularyDetail() {
 
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Define</Text>
-        <Text style={styles.definition}>
-          An African mammal with a long nose and large ears that lives
-          underground and eats insects
-        </Text>
+        <Text style={styles.definition}>{word.definition}</Text>
       </View>
 
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Related words</Text>
         <View style={styles.relatedWordsContainer}>
-          {relatedWords.map((word, index) => (
-            <TouchableOpacity key={index} style={styles.relatedWordButton}>
-              <Text style={styles.relatedWordText}>{word}</Text>
-            </TouchableOpacity>
-          ))}
+          {word.relatedWords.map(
+            (
+              relatedWord:
+                | string
+                | number
+                | boolean
+                | React.ReactElement<
+                    any,
+                    string | React.JSXElementConstructor<any>
+                  >
+                | Iterable<React.ReactNode>
+                | React.ReactPortal
+                | null
+                | undefined,
+              index: React.Key | null | undefined
+            ) => (
+              <TouchableOpacity key={index} style={styles.relatedWordButton}>
+                <Text style={styles.relatedWordText}>{relatedWord}</Text>
+              </TouchableOpacity>
+            )
+          )}
         </View>
       </View>
     </ScrollView>
@@ -87,41 +91,41 @@ export default function vocabularyDetail() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
   },
   header: {
     marginTop: 25,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
     padding: 16,
     borderBottomWidth: 1,
-    borderBottomColor: '#eee',
+    borderBottomColor: "#eee",
   },
   title: {
     fontSize: 20,
-    fontWeight: '600',
+    fontWeight: "600",
   },
   image: {
-    width: '100%',
+    width: "100%",
     height: 200,
-    resizeMode: 'contain',
+    resizeMode: "contain",
     marginVertical: 16,
   },
   pronunciationContainer: {
     padding: 16,
     borderBottomWidth: 1,
-    borderBottomColor: '#eee',
+    borderBottomColor: "#eee",
   },
   pronunciationRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     marginBottom: 8,
   },
   region: {
     width: 30,
     fontSize: 17,
-    fontWeight: '500',
+    fontWeight: "500",
   },
   pronunciation: {
     flex: 1,
@@ -131,12 +135,12 @@ const styles = StyleSheet.create({
   section: {
     padding: 16,
     borderBottomWidth: 1,
-    borderBottomColor: '#eee',
+    borderBottomColor: "#eee",
   },
   sectionTitle: {
     fontSize: 22,
-    fontWeight: '500',
-    color: '#408FB1',
+    fontWeight: "500",
+    color: "#408FB1",
     marginBottom: 8,
   },
   definition: {
@@ -144,12 +148,12 @@ const styles = StyleSheet.create({
     lineHeight: 24,
   },
   relatedWordsContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
+    flexDirection: "row",
+    flexWrap: "wrap",
     marginTop: 8,
   },
   relatedWordButton: {
-    backgroundColor: '#f5f5f5',
+    backgroundColor: "#f5f5f5",
     paddingHorizontal: 12,
     paddingVertical: 6,
     borderRadius: 16,
@@ -158,6 +162,6 @@ const styles = StyleSheet.create({
   },
   relatedWordText: {
     fontSize: 16,
-    color: '#666',
+    color: "#666",
   },
 });

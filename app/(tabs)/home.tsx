@@ -13,11 +13,10 @@ import {
 import { FontAwesome } from "@expo/vector-icons";
 import Svg, { Circle, Path, Rect } from "react-native-svg";
 
-// Định nghĩa kiểu dữ liệu cho mỗi video
 interface Video {
   id: string;
   title: string;
-  image: any; // Hoặc bạn có thể thay "any" bằng kiểu dữ liệu cụ thể nếu muốn (ví dụ: ImageSourcePropType từ react-native)
+  image: any; 
   category: string;
   time: string;
 }
