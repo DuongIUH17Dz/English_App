@@ -59,7 +59,10 @@ export default function home() {
     router.push("/details/listening");
   };
 
-  // Sửa lại renderItem với kiểu dữ liệu rõ ràng
+  const handleNewPress = () => {
+    router.push("/details/news");
+  };
+
   const renderVideoItem = ({ item }: { item: Video }) => (
     <View style={styles.newItem}>
       <View style={styles.newInfo}>
@@ -161,7 +164,7 @@ export default function home() {
           <Text style={styles.categoryText}>Listening</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.categoryItem}>
+        <TouchableOpacity style={styles.categoryItem} onPress={handleNewPress}>
           <Svg width="45" height="45" viewBox="0 0 34 34" fill="none">
             <Rect width="34" height="34" rx="8" fill="#167F71" />
             <Path

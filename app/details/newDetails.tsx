@@ -17,7 +17,7 @@ import Svg, { Path, Rect } from "react-native-svg";
 import { useLocalSearchParams } from "expo-router";
 import * as Speech from "expo-speech";
 
-export default function listeningDetails() {
+export default function newDetails() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [position, setPosition] = useState(0);
   const [duration, setDuration] = useState(0);
@@ -36,7 +36,6 @@ export default function listeningDetails() {
   };
 
   const handleSpeech = (text: string) => {
-    
     try {
       Speech.speak(text);
     } catch (error) {
@@ -51,7 +50,7 @@ export default function listeningDetails() {
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <ChevronLeft size={24} color="#000" />
         </TouchableOpacity>
-        <Text style={styles.headerTitle}>Listening</Text>
+        <Text style={styles.headerTitle}>News</Text>
       </View>
 
       <ScrollView style={styles.content}>
@@ -66,21 +65,9 @@ export default function listeningDetails() {
         />
 
         {/* Article Content */}
-        {word.content?.map((text, index) => (
-          <View key={index}>
-            <Text style={styles.paragraph}>{text}</Text>
-            <TouchableOpacity style={styles.speakerIcon} onPress={() => handleSpeech(text)}>
-              <Svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                <Path
-                  d="M18.3281 12C18.3281 10.3359 17.311 8.91094 15.8672 8.31094L15.0985 10.1578C15.8203 10.4578 16.3266 11.1703 16.3266 12.0047C16.3266 12.8344 15.8203 13.5469 15.0985 13.8516L15.8672 15.6984C17.311 15.0891 18.3281 13.6641 18.3281 12ZM17.4047 4.61719L16.636 6.46406C18.8063 7.36875 20.3297 9.50625 20.3297 12C20.3297 14.4984 18.8063 16.6313 16.636 17.5359L17.4047 19.3828C20.2969 18.1781 22.3266 15.3281 22.3266 12C22.3266 8.67188 20.2969 5.82188 17.4047 4.61719ZM2.32971 6.99844V16.9969H6.32815L13.3266 24V0L6.32815 6.99844H2.32971Z"
-                  fill="black"
-                />
-              </Svg>
-            </TouchableOpacity>
-          </View>
-        ))}
-      </ScrollView>
 
+        <Text style={styles.paragraph}>{word.content}</Text>
+      </ScrollView>
     </SafeAreaView>
   );
 }

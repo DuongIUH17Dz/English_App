@@ -2,34 +2,35 @@ import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
   View,
+  Text,
   FlatList,
   TouchableOpacity,
   Modal,
   TextInput,
   Button,
   Alert,
-  SafeAreaView,
 } from 'react-native';
-import { Feather } from '@expo/vector-icons';
-import dataJson from '../data/data.json';
-import Header from './header';
-import ListItem from './listitem';
 
 const App = () => {
+  const dataJson = require('../data/data.json');
+
   const [menuVisible, setMenuVisible] = useState(false);
   const [selectedTab, setSelectedTab] = useState('listening');
   const [data, setData] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [currentItem, setCurrentItem] = useState(null);
 
+  console.log('dataJson', dataJson);
+
   useEffect(() => {
+    // Load data based on selected tab
     if (selectedTab === 'listening') setData(dataJson.listening);
     else if (selectedTab === 'news') setData(dataJson.news);
     else if (selectedTab === 'categories') setData(dataJson.categories);
   }, [selectedTab]);
 
   const handleAddNew = () => {
-    setCurrentItem(null);
+    setCurrentItem(null); // Clear form for adding new
     setModalVisible(true);
   };
 
@@ -40,12 +41,14 @@ const App = () => {
     }
 
     if (currentItem.id) {
+      // Update
       setData((prevData) =>
         prevData.map((item) =>
           item.id === currentItem.id ? currentItem : item
         )
       );
     } else {
+      // Add new
       setData((prevData) => [
         ...prevData,
         { ...currentItem, id: Date.now() },
@@ -56,7 +59,7 @@ const App = () => {
   };
 
   const handleEdit = (item) => {
-    setCurrentItem(item);
+    setCurrentItem(item); // Load item data into form
     setModalVisible(true);
   };
 
@@ -71,245 +74,140 @@ const App = () => {
     ]);
   };
 
+  const renderItem = ({ item }) => (
+    <TouchableOpacity
+      style={styles.item}
+      onPress={() => handleEdit(item)}
+    >
+      <Text style={styles.title}>{item.title}</Text>
+      {selectedTab !== 'categories' && (
+        <>
+          <Text>{item.image}</Text>
+          <Text>{item.content}</Text>
+        </>
+      )}
+      {selectedTab === 'news' && <Text>Category: {item.category}</Text>}
+    </TouchableOpacity>
+  );
+
   return (
-    <SafeAreaView style={styles.container}>
-      <Header
-        title={selectedTab.charAt(0).toUpperCase() + selectedTab.slice(1)}
-        onMenuPress={() => setMenuVisible(!menuVisible)}
-      />
+    <View style={styles.container}>
+      {/* Dropdown Menu */}
+      <TouchableOpacity
+        style={styles.menuButton}
+        onPress={() => setMenuVisible(!menuVisible)}
+      >
+        <Text style={styles.menuText}>☰ Menu</Text>
+      </TouchableOpacity>
 
       {menuVisible && (
         <View style={styles.menu}>
-          <TouchableOpacity
-            style={styles.menuItem}
-            onPress={() => {
-              setSelectedTab('listening');
-              setMenuVisible(false);
-            }}
-          >
-            <Feather name="headphones" size={24} color="#2196F3" />
-            <Text style={styles.menuText}>Listening</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.menuItem}
-            onPress={() => {
-              setSelectedTab('news');
-              setMenuVisible(false);
-            }}
-          >
-            <Feather name="globe" size={24} color="#2196F3" />
-            <Text style={styles.menuText}>News</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.menuItem}
-            onPress={() => {
-              setSelectedTab('categories');/-strong/-heart:>:o:-((:-h setMenuVisible(false);
-            }}
-          >
-            <Feather name="list" size={24} color="#2196F3" />
-            <Text style={styles.menuText}>Categories</Text>
-          </TouchableOpacity>
+          <Button title="Listening" onPress={() => setSelectedTab('listening')} />
+          <Button title="News" onPress={() => setSelectedTab('news')} />
+          <Button title="Categories" onPress={() => setSelectedTab('categories')} />
         </View>
       )}
 
+      {/* Data List */}
       <FlatList
         data={data}
         keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => (
-          <ListItem item={item} onPress={() => handleEdit(item)} selectedTab={selectedTab} />
-        )}
+        renderItem={renderItem}
         style={styles.list}
       />
 
+      {/* Add Button */}
       <TouchableOpacity style={styles.addButton} onPress={handleAddNew}>
-        <Feather name="plus" size={24} color="#fff" />
+        <Text style={styles.addButtonText}>+ Add New</Text>
       </TouchableOpacity>
 
+      {/* Modal */}
       <Modal
         visible={modalVisible}
         animationType="slide"
         transparent={true}
         onRequestClose={() => setModalVisible(false)}
       >
-        <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
-            <TextInput
-              style={styles.input}
-              placeholder="Title"
-              value={currentItem?.title || ''}
-              onChangeText={(text) =>
-                setCurrentItem({ ...currentItem, title: text })
-              }
-            />
-            {selectedTab !== 'categories' && (
-              <>
-                <TextInput
-                  style={styles.input}
-                  placeholder="Image URL"
-                  value={currentItem?.image || ''}
-                  onChangeText={(text) =>
-                    setCurrentItem({ ...currentItem, image: text })
-                  }
-                />
-                <TextInput
-                  style={[styles.input, styles.contentInput]}
-                  placeholder="Content"
-                  multiline
-                  value={currentItem?.content || ''}
-                  onChangeText={(text) =>
-                    setCurrentItem({ ...currentItem, content: text })
-                  }
-                />
-              </>
-            )}
-            {selectedTab === 'news' && (
+        <View style={styles.modal}>
+          <TextInput
+            style={styles.input}
+            placeholder="Title"
+            value={currentItem?.title || ''}
+            onChangeText={(text) =>
+              setCurrentItem({ ...currentItem, title: text })
+            }
+          />
+          {selectedTab !== 'categories' && (
+            <>
               <TextInput
                 style={styles.input}
-                placeholder="Category"
-                value={currentItem?.category || ''}
+                placeholder="Image"
+                value={currentItem?.image || ''}
                 onChangeText={(text) =>
-                  setCurrentItem({ ...currentItem, category: text })
+                  setCurrentItem({ ...currentItem, image: text })
                 }
               />
-            )}
-            <View style={styles.modalButtons}>
-              <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
-                <Text style={styles.buttonText}>
-                  {currentItem?.id ? 'Update' : 'Create'}
-                </Text>
-              </TouchableOpacity>
-              {currentItem?.id && (
-                <TouchableOpacity
-                  style={styles.deleteButton}
-                  onPress={() => {
-                    handleDelete(currentItem.id);
-                    setModalVisible(false);
-                  }}
-                >
-                  <Text style={styles.buttonText}>Delete</Text>
-                </TouchableOpacity>
-              )}/-strong/-heart:>:o:-((:-h <TouchableOpacity
-                style={styles.cancelButton}
-                onPress={() => setModalVisible(false)}
-              >
-                <Text style={styles.cancelButtonText}>Cancel</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
+              <TextInput
+                style={styles.input}
+                placeholder="Content"
+                value={currentItem?.content || ''}
+                onChangeText={(text) =>
+                  setCurrentItem({ ...currentItem, content: text })
+                }
+              />
+            </>
+          )}
+          {selectedTab === 'news' && (
+            <TextInput
+              style={styles.input}
+              placeholder="Category"
+              value={currentItem?.category || ''}
+              onChangeText={(text) =>
+                setCurrentItem({ ...currentItem, category: text })
+              }
+            />
+          )}
+          <Button title={currentItem?.id ? 'Update' : 'Create'} onPress={handleSave} />
+          {currentItem?.id && (
+            <Button
+              title="Delete"
+              color="red"
+              onPress={() => {
+                handleDelete(currentItem.id);
+                setModalVisible(false);
+              }}
+            />
+          )}
+          <Button title="Cancel" onPress={() => setModalVisible(false)} />
         </View>
       </Modal>
-    </SafeAreaView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#f5f5f5',
-  },
-  menu: {
-    position: 'absolute',
-    top: 60,
-    right: 10,
-    backgroundColor: '#fff',
-    borderRadius: 5,
-    elevation: 5,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    zIndex: 1000,
-  },
-  menuItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: 15,
-    borderBottomWidth: 1,
-    borderBottomColor: '#eee',
-  },
-  menuText: {
-    marginLeft: 10,
-    fontSize: 16,
-  },
-  list: {
-    flex: 1,
-  },
+  container: { flex: 1, padding: 16, backgroundColor: '#fff' },
+  menuButton: { marginBottom: 10 },
+  menuText: { fontSize: 18, fontWeight: 'bold' },
+  menu: { marginBottom: 20 },
+  list: { flex: 1 },
+  item: { padding: 15, borderBottomWidth: 1, borderColor: '#ddd' },
+  title: { fontSize: 16, fontWeight: 'bold' },
   addButton: {
     position: 'absolute',
-    right: 20,
-    bottom: 20,
+    right: 16,
+    bottom: 16,
     backgroundColor: '#2196F3',
-    width: 56,
-    height: 56,
-    borderRadius: 28,
-    justifyContent: 'center',
-    alignItems: 'center',
-    elevation: 5,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
+    padding: 10,
+    borderRadius: 50,
   },
-  modalContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    backgroundColor: 'rgba(0,0,0,0.5)',
-  },
-  modalContent: {
-    backgroundColor: '#fff',
-    margin: 20,
-    borderRadius: 10,
-    padding: 20,
-    elevation: 5,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-  },
+  addButtonText: { color: '#fff', fontWeight: 'bold', fontSize: 18 },
+  modal: { flex: 1, justifyContent: 'center', padding: 20, backgroundColor: 'rgba(0,0,0,0.5)' },
   input: {
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#fff',
     padding: 10,
     marginBottom: 10,
     borderRadius: 5,
-  },
-  contentInput: {
-    height: 100,
-    textAlignVertical: 'top',
-  },
-  modalButtons: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginTop: 20,
-  },
-  saveButton: {
-    backgroundColor: '#2196F3',
-    padding: 10,
-    borderRadius: 5,
-    flex: 1,
-    marginRight: 10,
-  },
-  deleteButton: {
-    backgroundColor: '#FF5252',
-    padding: 10,
-    borderRadius: 5,
-    flex: 1,
-    marginRight: 10,
-  },
-  cancelButton: {
-    backgroundColor: '#f5f5f5',
-    padding: 10,
-    borderRadius: 5,
-    flex: 1,
-  },
-  buttonText: {
-    color: '#fff',
-    textAlign: 'center',
-    fontWeight: 'bold',
-  },
-  cancelButtonText: {
-    color: '#333',
-    textAlign: 'center',
-    fontWeight: 'bold',
   },
 });
 

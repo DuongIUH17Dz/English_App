@@ -26,7 +26,7 @@ export default function Signin() {
     if (isFormFilled) {
       router.push("/home");
     } else {
-      alert("Please fill in all fields");
+      alert("Please input email/phone and password");
     }
   };
 
@@ -230,6 +230,7 @@ const styles = StyleSheet.create({
     marginTop: 7,
     fontSize: 16,
     color: "#007AFF",
+    fontWeight: "bold",
   },
   orText: {
     marginTop: 20,
