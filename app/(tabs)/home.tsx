@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useRef } from "react";
 import { useRouter } from "expo-router";
 import {
   View,
@@ -9,14 +9,16 @@ import {
   TouchableOpacity,
   ScrollView,
   FlatList,
+  Dimensions,
 } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import Svg, { Circle, Path, Rect } from "react-native-svg";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 interface Video {
   id: string;
   title: string;
-  image: any; 
+  image: any;
   category: string;
   time: string;
 }
@@ -52,8 +54,198 @@ const videos: Video[] = [
   },
 ];
 
+interface Word {
+  id: string;
+  word: string;
+  definition: string;
+  relatedWords: string[];
+  category: string;
+  pronunciation: {
+    UK: string;
+  };
+  image: string;
+}
+
+const dictionary: Word[] = [
+  {
+    id: "1",
+    word: "Aardvark",
+    definition:
+      "A nocturnal mammal native to Africa, known for digging with its large claws.",
+    relatedWords: ["Ant", "Burrow", "Insectivore"],
+    category: "Animal",
+    pronunciation: {
+      UK: "/ˈɑːd.vɑːk/",
+    },
+    image: "https://b-cdn.springnest.com/media/img/9u/aardvarke131f0a.jpg",
+  },
+  {
+    id: "2",
+    word: "Abandon",
+    definition: "To leave behind or forsake someone or something.",
+    relatedWords: ["Desert", "Forsake", "Leave"],
+    category: "Action",
+    pronunciation: {
+      UK: "/əˈbæn.dən/",
+    },
+    image: "https://example.com/abandon-image.png",
+  },
+  {
+    id: "3",
+    word: "Abate",
+    definition: "To reduce or lessen in degree, intensity, or severity.",
+    relatedWords: ["Diminish", "Decrease", "Reduce"],
+    category: "Action",
+    pronunciation: {
+      UK: "/əˈbeɪt/",
+    },
+    image: "https://example.com/abate-image.png",
+  },
+  {
+    id: "4",
+    word: "Abbey",
+    definition:
+      "A building or complex of buildings used by a religious community, especially monks.",
+    relatedWords: ["Monastery", "Church", "Convent"],
+    category: "Place",
+    pronunciation: {
+      UK: "/ˈæb.i/",
+    },
+    image:
+      "https://cdn.britannica.com/12/144312-050-B06DACFC/Dominican-abbey-Santa-Maria-da-Vitoria-Portugal.jpg",
+  },
+  {
+    id: "5",
+    word: "Cacophony",
+    definition: "A harsh, discordant mixture of sounds.",
+    relatedWords: ["Noise", "Discord", "Clamor"],
+    category: "Sound",
+    pronunciation: { UK: "/kəˈkɒf.ə.ni/" },
+    image: "https://example.com/cacophony-image.png",
+  },
+  {
+    id: "6",
+    word: "Ephemeral",
+    definition: "Lasting for a very short time.",
+    relatedWords: ["Fleeting", "Transient", "Short-lived"],
+    category: "Time",
+    pronunciation: { UK: "/ɪˈfem.ər.əl/" },
+    image: "https://example.com/ephemeral-image.png",
+  },
+  {
+    id: "7",
+    word: "Gregarious",
+    definition: "Fond of company; sociable.",
+    relatedWords: ["Sociable", "Friendly", "Outspoken"],
+    category: "Personality",
+    pronunciation: { UK: "/ɡrɪˈɡeəriəs/" },
+    image: "https://example.com/gregarious-image.png",
+  },
+  {
+    id: "8",
+    word: "Harbinger",
+    definition:
+      "A person or thing that announces or signals the approach of another.",
+    relatedWords: ["Messenger", "Forerunner", "Precursor"],
+    category: "Person/Thing",
+    pronunciation: { UK: "/ˈhɑːbɪndʒə(r)/" },
+    image: "https://example.com/harbinger-image.png",
+  },
+  {
+    id: "9",
+    word: "Iridescent",
+    definition:
+      "Showing luminous colors that seem to change when seen from different angles.",
+    relatedWords: ["Shimmering", "Gleaming", "Rainbow-like"],
+    category: "Visual",
+    pronunciation: { UK: "/ˌɪrɪˈdɛsənt/" },
+    image: "https://example.com/iridescent-image.png",
+  },
+  {
+    id: "10",
+    word: "Juxtapose",
+    definition: "To place or deal with close together for contrasting effect.",
+    relatedWords: ["Contrast", "Compare", "Oppose"],
+    category: "Action",
+    pronunciation: { UK: "/ˈdʒʌkstəpəʊz/" },
+    image: "https://example.com/juxtapose-image.png",
+  },
+  {
+    id: "11",
+    word: "Kinetic",
+    definition: "Relating to or resulting from motion.",
+    relatedWords: ["Moving", "Dynamic", "Active"],
+    category: "Physics",
+    pronunciation: { UK: "/kɪˈnɛtɪk/" },
+    image: "https://example.com/kinetic-image.png",
+  },
+  {
+    id: "12",
+    word: "Laconic",
+    definition: "Using very few words.",
+    relatedWords: ["Succinct", "Brief", "Concise"],
+    category: "Communication",
+    pronunciation: { UK: "/ləˈkɒnɪk/" },
+    image: "https://example.com/laconic-image.png",
+  },
+  {
+    id: "13",
+    word: "Mellifluous",
+    definition: "Sweet or musical; pleasant to hear.",
+    relatedWords: ["Euphonious", "Harmonious", "Musical"],
+    category: "Sound",
+    pronunciation: { UK: "/mɛˈlɪfluəs/" },
+    image: "https://example.com/mellifluous-image.png",
+  },
+  {
+    id: "14",
+    word: "Nuance",
+    definition:
+      "A subtle difference in or shade of meaning, expression, or sound.",
+    relatedWords: ["Subtlety", "Refinement", "Distinction"],
+    category: "Language",
+    pronunciation: { UK: "/ˈnjuːɑːns/" },
+    image: "https://example.com/nuance-image.png",
+  },
+  {
+    id: "15",
+    word: "Obdurate",
+    definition:
+      "Stubbornly refusing to change one's opinion or course of action.",
+    relatedWords: ["Stubborn", "Resistant", "Intransigent"],
+    category: "Personality",
+    pronunciation: { UK: "/ˈɒbdʒʊreɪt/" },
+    image: "https://example.com/obdurate-image.png",
+  },
+  {
+    id: "16",
+    word: "Quixotic",
+    definition: "Exceedingly idealistic; unrealistic and impractical.",
+    relatedWords: ["Idealistic", "Romantic", "Unrealistic"],
+    category: "Personality",
+    pronunciation: { UK: "/kwɪkˈsɒtɪk/" },
+    image: "https://example.com/quixotic-image.png",
+  },
+];
+
 export default function home() {
   const router = useRouter();
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filteredData, setFilteredData] = useState(dictionary);
+  const flatListRef = useRef(null);
+
+  const handleSearch = (text: string) => {
+    setSearchQuery(text);
+    if (text === "") {
+      setFilteredData([]);
+    } else {
+      setFilteredData(
+        dictionary.filter((item) =>
+          item.word.toLowerCase().includes(text.toLowerCase())
+        )
+      );
+    }
+  };
 
   const handleListenPress = () => {
     router.push("/details/listening");
@@ -63,21 +255,12 @@ export default function home() {
     router.push("/details/news");
   };
 
-  const renderVideoItem = ({ item }: { item: Video }) => (
-    <View style={styles.newItem}>
-      <View style={styles.newInfo}>
-        <Text style={styles.newTitle}>{item.title}</Text>
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <Text style={styles.newCategory}> {item.category}</Text>
-          <Text style={styles.newTime}>{item.time}</Text>
-        </View>
-      </View>
-      <Image source={item.image} style={styles.videoImage} />
-    </View>
-  );
+  const handleWordPress = (word: Object) => {
+    router.push(`/details/vocabularyDetail?word=${JSON.stringify(word)}`);
+  };
 
   return (
-    <ScrollView style={styles.container}>
+    <SafeAreaView  style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
         <View style={styles.headerTop}>
@@ -130,11 +313,32 @@ export default function home() {
 
         {/* Search */}
         <View style={styles.searchContainer}>
-          <TextInput placeholder="Search" style={styles.searchInput} />
+          <TextInput
+            placeholder="Search"
+            value={searchQuery}
+            onChangeText={handleSearch}
+            style={styles.searchInput}
+          />
           <TouchableOpacity style={styles.searchButton}>
             <FontAwesome name="search" size={23} color="#fff" />
           </TouchableOpacity>
         </View>
+        {searchQuery.length > 0 && (
+          <FlatList
+            ref={flatListRef}
+            data={filteredData}
+            keyExtractor={(item) => item.id}
+            renderItem={({ item }) => (
+              <TouchableOpacity
+                style={styles.dropdownItem}
+                onPress={() => handleWordPress(item)}
+              >
+                <Text style={styles.dropdownText}>{item.word}</Text>
+              </TouchableOpacity>
+            )}
+            style={styles.dropdownList}
+          />
+        )}
       </View>
 
       {/* Banner */}
@@ -203,9 +407,11 @@ export default function home() {
           </View>
         ))}
       </View>
-    </ScrollView>
+    </SafeAreaView>
   );
 }
+
+const windowHeight = Dimensions.get('window').height;
 
 const styles = StyleSheet.create({
   container: {
@@ -238,6 +444,24 @@ const styles = StyleSheet.create({
   subGreeting: {
     fontSize: 14,
     color: "#777",
+  },
+  dropdownList: {
+    marginTop: 10,
+    maxHeight: windowHeight * 0.3, // Adjust the percentage as needed
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 8,
+    backgroundColor: "#fff",
+
+  },
+  dropdownItem: {
+    padding: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: "#eee",
+  },
+  dropdownText: {
+    fontSize: 16,
+    color: "#333",
   },
   searchContainer: {
     flexDirection: "row",

@@ -21,8 +21,6 @@ export default function newDetails() {
   const { word: wordParam } = useLocalSearchParams();
   const word = wordParam ? JSON.parse(wordParam as string) : {};
 
-  console.log("Word:11111", word);
-
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
