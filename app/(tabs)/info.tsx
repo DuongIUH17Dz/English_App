@@ -22,6 +22,7 @@ import {
   LogOut,
   LucideIcon,
 } from 'lucide-react-native';
+import { useRouter } from 'expo-router';
 
 interface SettingsItemProps {
   icon: LucideIcon;
@@ -44,6 +45,7 @@ const SettingsItem: React.FC<SettingsItemProps> = ({ icon: Icon, title, value, o
 );
 
 export default function ProfileSettings() {
+  const router = useRouter();
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
@@ -69,7 +71,7 @@ export default function ProfileSettings() {
           <SettingsItem icon={FileText} title="Terms & Conditions" onPress={() => console.log('Terms & Conditions')} />
           <SettingsItem icon={HelpCircle} title="Help Center" onPress={() => console.log('Help Center')} />
           <SettingsItem icon={UserPlus} title="Invite Friends" onPress={() => console.log('Invite Friends')} />
-          <SettingsItem icon={LogOut} title="Logout" onPress={() => console.log('Logout')} />
+          <SettingsItem icon={LogOut} title="Logout" onPress={() => router.push('/signin')} />
         </View>
       </ScrollView>
     </SafeAreaView>
