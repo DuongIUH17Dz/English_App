@@ -15,34 +15,13 @@ import { useNavigation } from "expo-router";
 import { NavigationProp } from "@react-navigation/native";
 import Svg, { Path, Rect } from "react-native-svg";
 import { useLocalSearchParams } from "expo-router";
-import * as Speech from "expo-speech";
 
 export default function newDetails() {
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [position, setPosition] = useState(0);
-  const [duration, setDuration] = useState(0);
   const navigation = useNavigation<NavigationProp<any>>();
   const { word: wordParam } = useLocalSearchParams();
   const word = wordParam ? JSON.parse(wordParam as string) : {};
 
   console.log("Word:11111", word);
-
-  const formatTime = (milliseconds: number) => {
-    const minutes = Math.floor(milliseconds / 60000);
-    const seconds = Math.floor((milliseconds % 60000) / 1000);
-    return `${minutes.toString().padStart(2, "0")}:${seconds
-      .toString()
-      .padStart(2, "0")}`;
-  };
-
-  const handleSpeech = (text: string) => {
-    try {
-      Speech.speak(text);
-    } catch (error) {
-      console.error("Error playing:", error);
-      alert("Error playing text. Please check your device settings.");
-    }
-  };
 
   return (
     <SafeAreaView style={styles.container}>

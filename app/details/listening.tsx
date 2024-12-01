@@ -22,18 +22,22 @@ const recentlyData: Data[] = [
     image:
       "https://img.freepik.com/free-vector/realistic-display-smartphone-with-different-apps_52683-30241.jpg",
     content: [
-      "New smartphone model launched with innovative features like 5G compatibility.",
-      "The device will revolutionize the way users interact with technology.",
+      "New smartphone model launched with innovative features like 5G compatibility, boasting download speeds several times faster than previous generations.  This cutting-edge technology promises a seamless user experience for streaming high-definition videos, downloading large files, and playing graphically demanding games without lag.",
+      "The device's sleek design incorporates a high-resolution AMOLED display, offering vibrant colors and exceptional clarity.  It also features an advanced processor, ensuring smooth and responsive performance even under heavy multitasking.  Furthermore, the enhanced camera system includes a high-megapixel main sensor with improved low-light capabilities, allowing users to capture stunning photos and videos in various lighting conditions.",
+      "Beyond its technological advancements, the new smartphone model emphasizes sustainability.  The device is packaged in eco-friendly materials, reducing its environmental footprint.  The company has also committed to using recycled components in future models.  This commitment to sustainable practices is expected to appeal to environmentally conscious consumers.",
+      "The device will revolutionize the way users interact with technology, offering an unparalleled level of integration with other smart devices and services.  Pre-orders have already exceeded expectations, signaling strong market interest in this groundbreaking new smartphone.",
     ],
   },
   {
     id: "2",
     title: "Tech giant releases new AI-powered software update",
     image:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJE36_lj6-kFmaw2HTL15e80B5_zPgYKFbgQ&s",
+      "https://elcom.com.vn/storage/uploads/images/Myu7kvXj7XEfCY7NzDD495duNCzTeQR4HAR5UGbe.jpg",
     content: [
-      "AI-powered updates can help devices learn from user behavior.",
-      "The new update is expected to boost productivity across various industries.",
+      "AI-powered updates can help devices learn from user behavior, adapting to individual preferences and optimizing performance over time.  This personalized experience tailors the device's functionality to each user's specific needs, resulting in a more intuitive and efficient workflow. The learning algorithms analyze user interactions to predict future needs and proactively suggest relevant actions, minimizing manual intervention.",
+      "The new update introduces a suite of advanced AI-powered features, including intelligent task management, predictive text capabilities, and enhanced security protocols.  The intelligent task management system automatically prioritizes tasks based on user habits and deadlines, ensuring that crucial tasks are addressed promptly.  The predictive text function learns user vocabulary and writing style to offer more accurate and personalized suggestions.",
+      "The enhanced security protocols utilize advanced machine learning algorithms to identify and thwart malicious threats in real time. This robust security system protects user data and privacy, ensuring a secure digital experience.  The update also incorporates features designed to improve accessibility for users with disabilities, making the technology more inclusive and user-friendly.",
+      "The new update is expected to boost productivity across various industries, streamlining workflows and enhancing efficiency in diverse sectors.  From healthcare and finance to education and manufacturing, the AI-powered capabilities are poised to revolutionize operations and drive innovation across the board.",
     ],
   },
   {
@@ -42,8 +46,9 @@ const recentlyData: Data[] = [
     image:
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSWSK1q17cICchVA2ABHzRG9RkHBYNR6p6Jfw&s",
     content: [
-      "International collaboration is key to the success of space missions.",
-      "The new mission aims to explore the outer limits of our solar system.",
+      "International collaboration is key to the success of space missions, pooling resources, expertise, and technological advancements from various nations. This collaborative approach allows for the development of more sophisticated and robust spacecraft, enabling ambitious missions that would be unfeasible for a single nation to undertake. The shared knowledge and experience foster innovation and accelerate progress in space exploration.",
+      "The new mission aims to explore the outer limits of our solar system, focusing on the study of distant planets, moons, and asteroids.  The mission's primary objectives include the search for extraterrestrial life, the analysis of planetary formations, and the investigation of potential resources in space.  Scientists hope to gain a deeper understanding of the origins of our solar system and the potential for life beyond Earth.",
+      "The mission will utilize cutting-edge technologies, including advanced propulsion systems, sophisticated robotic explorers, and high-resolution imaging equipment.  The mission's duration is expected to span several years, requiring meticulous planning and execution. The extensive data gathered will be analyzed by scientists worldwide, contributing to a significant advancement in our knowledge of the cosmos.",
     ],
   },
   {
@@ -52,8 +57,8 @@ const recentlyData: Data[] = [
     image:
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQf5bcJEoq-f7SCZSvoOwB0FC9x2VTHir43sQ&s",
     content: [
-      "The wildfires have displaced thousands of families across the region.",
-      "Emergency relief efforts are underway to assist those affected.",
+      "The wildfires have displaced thousands of families across the region, forcing them to evacuate their homes and seek refuge in temporary shelters.  Many have lost their homes, possessions, and livelihoods, facing immense challenges in the aftermath of the devastating fires.  The scale of destruction is unprecedented, leaving entire communities in ruins.",
+      "Emergency relief efforts are underway to assist those affected, providing food, water, shelter, and medical care.  Volunteers and aid organizations are working tirelessly to provide support to those in need, distributing essential supplies and offering emotional support to those who have suffered significant loss.  The recovery process will be long and arduous, requiring significant resources and community support.",
     ],
   },
 ];
@@ -65,8 +70,9 @@ const topicsData: Data[] = [
     image:
       "https://www.shutterstock.com/shutterstock/photos/1932042689/display_1500/stock-photo-businessman-using-mobile-smart-phone-business-global-internet-connection-application-technology-1932042689.jpg",
     content: [
-      "The wildfires have displaced thousands of families across the region.",
-      "Emergency relief efforts are underway to assist those affected.",
+      "The rapid advancement of technology continues to reshape our world, from artificial intelligence and machine learning to breakthroughs in renewable energy and space exploration.  The integration of technology into daily life is transforming industries and creating new opportunities, while also presenting challenges related to data privacy, cybersecurity, and ethical considerations.",
+      "The development of innovative technologies presents both exciting possibilities and potential risks.  For example, artificial intelligence offers transformative capabilities across various sectors, including healthcare, finance, and transportation, but raises concerns about job displacement and algorithmic bias.  Similarly, the use of renewable energy sources is crucial for mitigating climate change, yet faces hurdles in terms of scalability and infrastructure development.",
+      "The digital revolution is fundamentally altering the way we communicate, access information, and interact with our environment.  While technological advancements have led to increased connectivity and efficiency, they also raise issues concerning information security, digital inequality, and the potential for misuse.  Navigating these challenges requires a multi-faceted approach involving collaboration among governments, industries, and individuals.",
     ],
   },
   {
@@ -155,7 +161,10 @@ export default function listening() {
           style={styles.horizontalScroll}
         >
           {recentlyData.map((item) => (
-            <TouchableOpacity key={item.id} onPress={() => handleListeningPress(item)}>
+            <TouchableOpacity
+              key={item.id}
+              onPress={() => handleListeningPress(item)}
+            >
               <View style={styles.recentlyCard}>
                 <Image
                   source={{ uri: item.image }}
