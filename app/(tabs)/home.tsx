@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useRouter } from "expo-router";
 import {
   View,
@@ -27,21 +27,24 @@ const videos: Video[] = [
   {
     id: "1",
     title: "Exploring the World",
-    image: "https://img.freepik.com/free-photo/animal-eye-staring-close-up-watch-nature-generative-ai_188544-15471.jpg",
+    image:
+      "https://img.freepik.com/free-photo/animal-eye-staring-close-up-watch-nature-generative-ai_188544-15471.jpg",
     category: "News",
     time: "10 hrs ago",
   },
   {
     id: "2",
     title: "Cooking Masterclass",
-    image: "https://c4.wallpaperflare.com/wallpaper/848/223/819/nature-jpg-format-download-1920x1200-wallpaper-preview.jpg",
+    image:
+      "https://c4.wallpaperflare.com/wallpaper/848/223/819/nature-jpg-format-download-1920x1200-wallpaper-preview.jpg",
     category: "News",
     time: "12 hrs ago",
   },
   {
     id: "3",
     title: "Tech Innovations 2024",
-    image: "https://t4.ftcdn.net/jpg/09/37/12/73/360_F_937127370_RzigoTq55hhV6TOcnRXbZ2kBjSOgWUMJ.jpg",
+    image:
+      "https://t4.ftcdn.net/jpg/09/37/12/73/360_F_937127370_RzigoTq55hhV6TOcnRXbZ2kBjSOgWUMJ.jpg",
     category: "News",
     time: "8 hrs ago",
   },
@@ -224,16 +227,30 @@ const dictionary: Word[] = [
 export default function home() {
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState("");
-  const [filteredData, setFilteredData] = useState(dictionary);
+  const [words, setWords] = useState<Word[]>([]); // Holds the full dictionary data
+  const [filteredWords, setFilteredWords] = useState<Word[]>([]); // Holds the filtered data based on search
   const flatListRef = useRef(null);
+
+  // Fetch the dictionary data from the API
+  useEffect(() => {
+    fetch("https://64544639a74f994b333d117e.mockapi.io/dictionary")
+      .then((response) => response.json())
+      .then((data) => {
+        setWords(data);
+        setFilteredWords(data); // Initially, display all the words
+      })
+      .catch((error) => {
+        console.error("Error fetching data", error);
+      });
+  }, []);
 
   const handleSearch = (text: string) => {
     setSearchQuery(text);
     if (text === "") {
-      setFilteredData([]);
+      setFilteredWords(words); // Reset to the full data if the search query is empty
     } else {
-      setFilteredData(
-        dictionary.filter((item) =>
+      setFilteredWords(
+        words.filter((item) =>
           item.word.toLowerCase().includes(text.toLowerCase())
         )
       );
@@ -253,7 +270,7 @@ export default function home() {
   };
 
   return (
-    <SafeAreaView  style={styles.container}>
+    <SafeAreaView style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
         <View style={styles.headerTop}>
@@ -319,7 +336,7 @@ export default function home() {
         {searchQuery.length > 0 && (
           <FlatList
             ref={flatListRef}
-            data={filteredData}
+            data={filteredWords}
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => (
               <TouchableOpacity
@@ -396,7 +413,7 @@ export default function home() {
                 <Text style={styles.newTime}>{item.time}</Text>
               </View>
             </View>
-            <Image source={{uri : item.image}} style={styles.videoImage} />
+            <Image source={{ uri: item.image }} style={styles.videoImage} />
           </View>
         ))}
       </View>
@@ -404,7 +421,7 @@ export default function home() {
   );
 }
 
-const windowHeight = Dimensions.get('window').height;
+const windowHeight = Dimensions.get("window").height;
 
 const styles = StyleSheet.create({
   container: {
@@ -445,7 +462,6 @@ const styles = StyleSheet.create({
     borderColor: "#ccc",
     borderRadius: 8,
     backgroundColor: "#fff",
-
   },
   dropdownItem: {
     padding: 10,
