@@ -9,7 +9,6 @@ import {
 } from "react-native";
 import { ChevronLeft, Bookmark, Volume2 } from "lucide-react-native";
 import { useNavigation } from "expo-router";
-import { useRouter } from "expo-router";
 import { useLocalSearchParams } from "expo-router";
 import * as Speech from "expo-speech";
 
