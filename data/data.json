@@ -1,15 +1,212 @@
 {
-    "listening": [
-      { "id": 1, "title": "Listening 1", "image": "image1.jpg", "content": "Content for Listening 1" },
-      { "id": 2, "title": "Listening 2", "image": "image2.jpg", "content": "Content for Listening 2" }
-    ],
-    "news": [
-      { "id": 1, "title": "News 1", "image": "image1.jpg", "content": "Content for News 1", "category": "Category 1" },
-      { "id": 2, "title": "News 2", "image": "image2.jpg", "content": "Content for News 2", "category": "Category 2" }
-    ],
-    "categories": [
-      { "id": 1, "title": "Category 1" },
-      { "id": 2, "title": "Category 2" }
-    ]
-  }
-  
+  "recentlyData": [
+    {
+      "id": "1",
+      "title": "New smartphone model launched in Europe market",
+      "image": "https://img.freepik.com/free-vector/realistic-display-smartphone-with-different-apps_52683-30241.jpg",
+      "content": [
+        "New smartphone model launched with innovative features like 5G compatibility, boasting download speeds several times faster than previous generations.  This cutting-edge technology promises a seamless user experience for streaming high-definition videos, downloading large files, and playing graphically demanding games without lag.",
+        "The device's sleek design incorporates a high-resolution AMOLED display, offering vibrant colors and exceptional clarity.  It also features an advanced processor, ensuring smooth and responsive performance even under heavy multitasking.  Furthermore, the enhanced camera system includes a high-megapixel main sensor with improved low-light capabilities, allowing users to capture stunning photos and videos in various lighting conditions.",
+        "Beyond its technological advancements, the new smartphone model emphasizes sustainability.  The device is packaged in eco-friendly materials, reducing its environmental footprint.  The company has also committed to using recycled components in future models.  This commitment to sustainable practices is expected to appeal to environmentally conscious consumers.",
+        "The device will revolutionize the way users interact with technology, offering an unparalleled level of integration with other smart devices and services.  Pre-orders have already exceeded expectations, signaling strong market interest in this groundbreaking new smartphone."
+      ]
+    },
+    {
+      "id": "2",
+      "title": "Tech giant releases new AI-powered software update",
+      "image": "https://elcom.com.vn/storage/uploads/images/Myu7kvXj7XEfCY7NzDD495duNCzTeQR4HAR5UGbe.jpg",
+      "content": [
+        "AI-powered updates can help devices learn from user behavior, adapting to individual preferences and optimizing performance over time.  This personalized experience tailors the device's functionality to each user's specific needs, resulting in a more intuitive and efficient workflow. The learning algorithms analyze user interactions to predict future needs and proactively suggest relevant actions, minimizing manual intervention.",
+        "The new update introduces a suite of advanced AI-powered features, including intelligent task management, predictive text capabilities, and enhanced security protocols.  The intelligent task management system automatically prioritizes tasks based on user habits and deadlines, ensuring that crucial tasks are addressed promptly.  The predictive text function learns user vocabulary and writing style to offer more accurate and personalized suggestions.",
+        "The enhanced security protocols utilize advanced machine learning algorithms to identify and thwart malicious threats in real time. This robust security system protects user data and privacy, ensuring a secure digital experience.  The update also incorporates features designed to improve accessibility for users with disabilities, making the technology more inclusive and user-friendly.",
+        "The new update is expected to boost productivity across various industries, streamlining workflows and enhancing efficiency in diverse sectors.  From healthcare and finance to education and manufacturing, the AI-powered capabilities are poised to revolutionize operations and drive innovation across the board."
+      ]
+    },
+    {
+      "id": "3",
+      "title": "Countries collaborate on new space exploration mission",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSWSK1q17cICchVA2ABHzRG9RkHBYNR6p6Jfw&s",
+      "content": [
+        "International collaboration is key to the success of space missions, pooling resources, expertise, and technological advancements from various nations. This collaborative approach allows for the development of more sophisticated and robust spacecraft, enabling ambitious missions that would be unfeasible for a single nation to undertake. The shared knowledge and experience foster innovation and accelerate progress in space exploration.",
+        "The new mission aims to explore the outer limits of our solar system, focusing on the study of distant planets, moons, and asteroids.  The mission's primary objectives include the search for extraterrestrial life, the analysis of planetary formations, and the investigation of potential resources in space.  Scientists hope to gain a deeper understanding of the origins of our solar system and the potential for life beyond Earth.",
+        "The mission will utilize cutting-edge technologies, including advanced propulsion systems, sophisticated robotic explorers, and high-resolution imaging equipment.  The mission's duration is expected to span several years, requiring meticulous planning and execution. The extensive data gathered will be analyzed by scientists worldwide, contributing to a significant advancement in our knowledge of the cosmos."
+      ]
+    },
+    {
+      "id": "4",
+      "title": "Wildfires devastate regions across North America",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQf5bcJEoq-f7SCZSvoOwB0FC9x2VTHir43sQ&s",
+      "content": [
+        "The wildfires have displaced thousands of families across the region, forcing them to evacuate their homes and seek refuge in temporary shelters.  Many have lost their homes, possessions, and livelihoods, facing immense challenges in the aftermath of the devastating fires.  The scale of destruction is unprecedented, leaving entire communities in ruins.",
+        "Emergency relief efforts are underway to assist those affected, providing food, water, shelter, and medical care.  Volunteers and aid organizations are working tirelessly to provide support to those in need, distributing essential supplies and offering emotional support to those who have suffered significant loss.  The recovery process will be long and arduous, requiring significant resources and community support."
+      ]
+    }
+  ],
+  "topicsData": [
+    {
+      "id": "5",
+      "title": "Technology",
+      "image": "https://www.shutterstock.com/shutterstock/photos/1932042689/display_1500/stock-photo-businessman-using-mobile-smart-phone-business-global-internet-connection-application-technology-1932042689.jpg",
+      "content": [
+        "The rapid advancement of technology continues to reshape our world...",
+        "The development of innovative technologies presents both exciting possibilities...",
+        "The digital revolution is fundamentally altering the way we communicate..."
+      ]
+    },
+    {
+      "id": "6",
+      "title": "Health",
+      "image": "https://shanhealth.vn/wp-content/uploads/2023/11/mental-health-la-gi-1.webp",
+      "content": [
+        "The wildfires have displaced thousands of families across the region...",
+        "Emergency relief efforts are underway to assist those affected..."
+      ]
+    },
+    {
+      "id": "7",
+      "title": "Environment",
+      "image": "https://t3.ftcdn.net/jpg/05/78/65/98/360_F_578659816_v2ZJMwlpFisEE66gWt6h3POodHeLYseI.jpg",
+      "content": [
+        "The wildfires have displaced thousands of families across the region.",
+        "Emergency relief efforts are underway to assist those affected."
+      ]
+    },
+    {
+      "id": "8",
+      "title": "Finance",
+      "image": "https://img.freepik.com/free-vector/finance-financial-performance-concept-illustration_53876-43398.jpg",
+      "content": [
+        "The wildfires have displaced thousands of families across the region.",
+        "Emergency relief efforts are underway to assist those affected."
+      ]
+    },
+    {
+      "id": "9",
+      "title": "Sports",
+      "image": "https://t4.ftcdn.net/jpg/00/04/43/79/360_F_4437974_DbE4NRiaoRtUeivMyfPoXZFNdCnYmjPq.jpg",
+      "content": [
+        "The wildfires have displaced thousands of families across the region.",
+        "Emergency relief efforts are underway to assist those affected."
+      ]
+    },
+    {
+      "id": "10",
+      "title": "Entertainment",
+      "image": "https://lumolog.com/wp-content/uploads/2024/04/Entertainment-Trends-1024x683.jpg",
+      "content": [
+        "The wildfires have displaced thousands of families across the region.",
+        "Emergency relief efforts are underway to assist those affected."
+      ]
+    }
+  ],
+  "sportData": [
+    {
+      "id": "11",
+      "title": "Airlines ground Asia ground Bali flights after volcano erupts",
+      "image": "https://img.freepik.com/free-photo/sports-tools_53876-138077.jpg",
+      "content": "Mount Agung, a volcano in Bali, Indonesia, erupted on [Date], sending a plume of ash and smoke high into the atmosphere.  This eruption prompted several major airlines to ground flights to and from Denpasar Airport (DPS), Bali's main international airport.  Airlines such as [Airline 1], [Airline 2], and [Airline 3] announced cancellations and delays, affecting thousands of passengers.  The ash cloud posed a significant threat to aircraft engines, and airlines prioritized safety by halting operations.  Travelers were advised to check with their airlines for updates and potential flight disruptions. The eruption also caused concerns about air quality in nearby areas.  Authorities advised residents to wear masks and stay indoors when possible to avoid respiratory problems from the volcanic ash.  Airport officials were working diligently to assess the situation and resume normal operations as quickly as possible, but a timeline for reopening the airport remained uncertain.  The eruption served as a reminder of the potent forces of nature and the potential impact on global travel."
+    },
+    {
+      "id": "22",
+      "title": "New Sport Innovations Changing The Game",
+      "image": "https://img.freepik.com/free-photo/sports-tools_53876-138077.jpg",
+      "content": "Airlines ground Asia ground Bali flights after volcano erupts"
+    },
+    {
+      "id": "32",
+      "title": "Sports Events You Shouldn't Miss This Year",
+      "image": "https://img.freepik.com/free-photo/sports-tools_53876-138077.jpg",
+      "content": "Airlines ground Asia ground Bali flights after volcano erupts"
+    },
+    {
+      "id": "43",
+      "title": "How Technology is Shaping the Future of Sports",
+      "image": "https://img.freepik.com/free-photo/sports-tools_53876-138077.jpg",
+      "content": "Airlines ground Asia ground Bali flights after volcano erupts"
+    }
+  ],
+  "travelData": [
+    {
+      "id": "222",
+      "title": "Explore Bali: The Ultimate Travel Guide",
+      "image": "https://i.pinimg.com/736x/84/70/94/847094a5d2df67f4fc7a7a6b77bcfe7b.jpg",
+      "content": "Bali, the 'Island of Gods,' offers a captivating blend of natural beauty, vibrant culture, and spiritual serenity.  From the lush rice terraces of Ubud to the pristine beaches of Seminyak, Bali caters to every traveler's desire.  Explore ancient temples like Tanah Lot, perched dramatically on a rock formation in the sea, and Uluwatu, known for its breathtaking cliffside location and Kecak dance performances at sunset. Immerse yourself in Balinese culture by visiting local villages, witnessing traditional ceremonies, and learning about the island's rich artistic heritage. Indulge in delicious Indonesian cuisine, from savory satays to flavorful curries, and experience the warm hospitality of the Balinese people."
+    },
+    {
+      "id": "88",
+      "title": "Top 10 Destinations for 2024",
+      "image": "https://i.pinimg.com/736x/84/70/94/847094a5d2df67f4fc7a7a6b77bcfe7b.jpg",
+      "content": "Airlines ground Asia ground Bali flights after volcano erupts"
+    },
+    {
+      "id": "45",
+      "title": "How to Travel Smart on a Budget",
+      "image": "https://i.pinimg.com/736x/84/70/94/847094a5d2df67f4fc7a7a6b77bcfe7b.jpg",
+      "content": "Airlines ground Asia ground Bali flights after volcano erupts"
+    },
+    {
+      "id": "25",
+      "title": "The Rise of Eco-Tourism: A Green Revolution",
+      "image": "https://i.pinimg.com/736x/84/70/94/847094a5d2df67f4fc7a7a6b77bcfe7b.jpg",
+      "content": "Airlines ground Asia ground Bali flights after volcano erupts"
+    }
+  ],
+  "entertainmentData": [
+    {
+      "id": "1e",
+      "title": "Upcoming Movies You Need to Watch",
+      "image": "https://lumolog.com/wp-content/uploads/2024/04/Entertainment-Trends-1024x683.jpg",
+      "content": "The summer blockbuster season is upon us, and this year's lineup promises a thrilling array of films for every moviegoer.  From superhero epics to heartwarming comedies, there's something for everyone.  Don't miss [Movie Title 1], a spectacular action-adventure that will leave you on the edge of your seat.  [Movie Title 2] is a critically acclaimed drama that explores themes of love, loss, and redemption.  For comedy fans, [Movie Title 3] is a hilarious ensemble cast that delivers non-stop laughs.  For those seeking something different, [Movie Title 4] is an imaginative fantasy adventure that takes viewers to another world entirely.  And for animation lovers, [Movie Title 5] is a stunning visual masterpiece that will capture the hearts of viewers of all ages."
+    },
+    {
+      "id": "5h",
+      "title": "Celebrity News: What's Happening Right Now",
+      "image": "https://lumolog.com/wp-content/uploads/2024/04/Entertainment-Trends-1024x683.jpg",
+      "content": "Airlines ground Asia ground Bali flights after volcano erupts"
+    },
+    {
+      "id": "5f",
+      "title": "Best TV Shows to Binge-Watch This Month",
+      "image": "https://lumolog.com/wp-content/uploads/2024/04/Entertainment-Trends-1024x683.jpg",
+      "content": "Airlines ground Asia ground Bali flights after volcano erupts"
+    },
+    {
+      "id": "4b",
+      "title": "Music Trends to Follow in 2024",
+      "image": "https://lumolog.com/wp-content/uploads/2024/04/Entertainment-Trends-1024x683.jpg",
+      "content": "Airlines ground Asia ground Bali flights after volcano erupts"
+    }
+  ],
+  "nextSeries" : [
+    {
+      "id": "1d",
+      "title": "Harry Potter Part 2",
+      "thumbnail": "https://tiki.vn/blog/wp-content/uploads/2023/08/harry-potter-thumb.jpg"
+    },
+    {
+      "id": "2d",
+      "title": "Lord of the Rings: The Fellowship of the Ring",
+      "thumbnail": "https://variety.com/wp-content/uploads/2021/12/Lord-of-the-Rings-Return-of-the-King.jpg"
+    },
+    {
+      "id": "3d",
+      "title": "Avengers: Endgame",
+      "thumbnail": "https://cdn.moveek.com/storage/media/cache/large/5cb6e3255a2f8168592296.jpg"
+    },
+    {
+      "id": "4d",
+      "title": "The Matrix: Reloaded",
+      "thumbnail": "https://m.media-amazon.com/images/M/MV5BNjAxYjkxNjktYTU0YS00NjFhLWIyMDEtMzEzMTJjMzRkMzQ1XkEyXkFqcGc@._V1_.jpg"
+    },
+    {
+      "id": "5d",
+      "title": "Spider-Man: No Way Home",
+      "thumbnail": "https://genk.mediacdn.vn/139269124445442048/2024/9/17/photo-1726563733212-172656373674499586382-1726585030019-1726585030191299164014.jpeg"
+    },
+    {
+      "id": "6d",
+      "title": "Star Wars: The Empire Strikes Back",
+      "thumbnail": "https://cdn-images.vtv.vn/zoom/640_400/66349b6076cb4dee98746cf1/2024/11/09/hb-disneyplus-skywalkersaga-mobile-19267-e964ed2c-1--57131370325514295168852-14870489541703807402253.jpeg"
+    }
+  ]
+}

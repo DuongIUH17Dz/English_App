@@ -32,32 +32,8 @@ const PlayButton = () => (
 );
 
 export default function video() {
-  const nextSeries = [
-    {
-      title: "Harry Potter Part 2",
-      thumbnail: "https://tiki.vn/blog/wp-content/uploads/2023/08/harry-potter-thumb.jpg"
-    },
-    {
-      title: "Lord of the Rings: The Fellowship of the Ring",
-      thumbnail: "https://variety.com/wp-content/uploads/2021/12/Lord-of-the-Rings-Return-of-the-King.jpg"
-    },
-    {
-      title: "Avengers: Endgame",
-      thumbnail: "https://cdn.moveek.com/storage/media/cache/large/5cb6e3255a2f8168592296.jpg"
-    },
-    {
-      title: "The Matrix: Reloaded",
-      thumbnail: "https://m.media-amazon.com/images/M/MV5BNjAxYjkxNjktYTU0YS00NjFhLWIyMDEtMzEzMTJjMzRkMzQ1XkEyXkFqcGc@._V1_.jpg"
-    },
-    {
-      title: "Spider-Man: No Way Home",
-      thumbnail: "https://genk.mediacdn.vn/139269124445442048/2024/9/17/photo-1726563733212-172656373674499586382-1726585030019-1726585030191299164014.jpeg"
-    },
-    {
-      title: "Star Wars: The Empire Strikes Back",
-      thumbnail: "https://cdn-images.vtv.vn/zoom/640_400/66349b6076cb4dee98746cf1/2024/11/09/hb-disneyplus-skywalkersaga-mobile-19267-e964ed2c-1--57131370325514295168852-14870489541703807402253.jpeg"
-    },
-  ];
+  const data = require("../../data/data.json");
+  const nextSeries = data.nextSeries;
 
   return (
     <ScrollView style={styles.container}>
@@ -87,7 +63,7 @@ export default function video() {
           {nextSeries.map((item, index) => (
             <TouchableOpacity key={index} style={styles.thumbnailContainer}>
               <Image
-                source={{uri : item.thumbnail}}
+                source={{ uri: item.thumbnail }}
                 style={styles.thumbnail}
                 resizeMode="cover"
               />

@@ -20,16 +20,26 @@ const App = () => {
   const [data, setData] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [currentItem, setCurrentItem] = useState(null);
-  const [hoveredMenu, setHoveredMenu] = useState(null); // To track hovered menu item
+  const [hoveredMenu, setHoveredMenu] = useState(null);
 
   useEffect(() => {
-    if (selectedTab === "listening") setData(dataJson.listening);
-    else if (selectedTab === "news") setData(dataJson.news);
-    else if (selectedTab === "categories") setData(dataJson.categories);
+    let newData = [];
+    if (selectedTab === "listening") {
+      newData = [...dataJson.recentlyData, ...dataJson.topicsData];
+    } else if (selectedTab === "news") {
+      newData = [
+        ...dataJson.sportData,
+        ...dataJson.travelData,
+        ...dataJson.entertainmentData,
+      ];
+    } else if (selectedTab === "video") {
+      newData = [...dataJson.nextSeries];
+    }
+    setData(newData);
   }, [selectedTab]);
 
   const handleAddNew = () => {
-    setCurrentItem(null); // Clear form for adding new
+    setCurrentItem(null);
     setModalVisible(true);
   };
 
@@ -40,27 +50,25 @@ const App = () => {
     }
 
     if (currentItem.id) {
-      // Update
       setData((prevData) =>
         prevData.map((item) =>
           item.id === currentItem.id ? currentItem : item
         )
       );
     } else {
-      // Add new
-      setData((prevData) => [...prevData, { ...currentItem, id: Date.now() }]);
+      const newId = Date.now();
+      setData((prevData) => [...prevData, { ...currentItem, id: newId }]);
     }
-
     setModalVisible(false);
   };
 
   const handleEdit = (item) => {
-    setCurrentItem(item); // Load item data into form
+    setCurrentItem(item);
     setModalVisible(true);
   };
 
   const handleLogout = () => {
-    router.push('/signin'); 
+    router.push("/signin");
   };
 
   const handleDelete = (id) => {
@@ -82,15 +90,19 @@ const App = () => {
   const renderItem = ({ item }) => (
     <TouchableOpacity style={styles.item} onPress={() => handleEdit(item)}>
       <Text style={styles.title}>{item.title}</Text>
-      {selectedTab !== "categories" && (
+      {selectedTab !== "video" && (
         <>
           <Text style={styles.text}>{item.image}</Text>
-          <Text style={styles.text}>{item.content}</Text>
+          {Array.isArray(item.content) ? (
+            item.content.map((contentItem, index) => (
+              <Text key={index} style={styles.text}>{contentItem}</Text>
+            ))
+          ) : (
+            <Text style={styles.text}>{item.content}</Text>
+          )}
         </>
       )}
-      {selectedTab === "news" && (
-        <Text style={styles.text}>Category: {item.category}</Text>
-      )}
+      {selectedTab === "video" && <Text style={styles.text}>{item.thumbnail}</Text>}
     </TouchableOpacity>
   );
 
@@ -105,27 +117,25 @@ const App = () => {
       </TouchableOpacity>
       {/* Current Tab Title */}
       <Text style={styles.currentTabTitle}>
-        {" "}
         {selectedTab.charAt(0).toUpperCase() + selectedTab.slice(1)}
       </Text>
 
       {menuVisible && (
         <View style={styles.menu}>
-          {/* Render buttons for each menu item */}
-          {["listening", "news", "categories"].map((tab) => (
+          {["listening", "news", "video"].map((tab) => (
             <TouchableOpacity
               key={tab}
               style={[
                 styles.menuItem,
-                hoveredMenu === tab && styles.menuItemHovered, // Apply hover effect
-                selectedTab === tab && styles.menuItemSelected, // Apply selected style
+                hoveredMenu === tab && styles.menuItemHovered,
+                selectedTab === tab && styles.menuItemSelected,
               ]}
               onPress={() => {
                 setSelectedTab(tab);
-                setMenuVisible(false); // Close menu on selection
+                setMenuVisible(false);
               }}
-              onMouseEnter={() => setHoveredMenu(tab)} // Hover effect (works on web or emulator)
-              onMouseLeave={() => setHoveredMenu(null)} // Reset hover effect (works on web or emulator)
+              onMouseEnter={() => setHoveredMenu(tab)}
+              onMouseLeave={() => setHoveredMenu(null)}
             >
               <Text style={styles.menuItemText}>
                 {tab.charAt(0).toUpperCase() + tab.slice(1)}
@@ -138,7 +148,7 @@ const App = () => {
       {/* Data List */}
       <FlatList
         data={data}
-        keyExtractor={(item) => item.id.toString()}
+        keyExtractor={(item) => item.id?.toString() || item.title} // Handle IDs and titles
         renderItem={renderItem}
         style={styles.list}
       />
@@ -169,7 +179,7 @@ const App = () => {
                 setCurrentItem({ ...currentItem, title: text })
               }
             />
-            {selectedTab !== "categories" && (
+            {selectedTab !== "video" && (
               <>
                 <TextInput
                   style={styles.input}
@@ -182,20 +192,24 @@ const App = () => {
                 <TextInput
                   style={styles.input}
                   placeholder="Content"
-                  value={currentItem?.content || ""}
+                  value={currentItem?.content?.join("\n") || ""} // Handle array content
                   onChangeText={(text) =>
-                    setCurrentItem({ ...currentItem, content: text })
+                    setCurrentItem({
+                      ...currentItem,
+                      content: text.split("\n"),
+                    })
                   }
+                  multiline
                 />
               </>
             )}
-            {selectedTab === "news" && (
+            {selectedTab === "video" && (
               <TextInput
                 style={styles.input}
-                placeholder="Category"
-                value={currentItem?.category || ""}
+                placeholder="Thumbnail"
+                value={currentItem?.thumbnail || ""}
                 onChangeText={(text) =>
-                  setCurrentItem({ ...currentItem, category: text })
+                  setCurrentItem({ ...currentItem, thumbnail: text })
                 }
               />
             )}
@@ -254,10 +268,10 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   menuItemHovered: {
-    backgroundColor: "#ddd", 
+    backgroundColor: "#ddd",
   },
   menuItemSelected: {
-    backgroundColor: "#2196F3", 
+    backgroundColor: "#2196F3",
   },
   logoutButton: {
     marginTop: 20,
