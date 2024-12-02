@@ -47,7 +47,7 @@ const travelData: Data[] = [
     id: "1",
     title: "Explore Bali: The Ultimate Travel Guide",
     image:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvB5HdszlBqgSe3rDL6o-ArxDL2XWkqd3qTg&s",
+      "https://i.pinimg.com/736x/84/70/94/847094a5d2df67f4fc7a7a6b77bcfe7b.jpg",
     content:
       "Bali, the 'Island of Gods,' offers a captivating blend of natural beauty, vibrant culture, and spiritual serenity.  From the lush rice terraces of Ubud to the pristine beaches of Seminyak, Bali caters to every traveler's desire.  Explore ancient temples like Tanah Lot, perched dramatically on a rock formation in the sea, and Uluwatu, known for its breathtaking cliffside location and Kecak dance performances at sunset. Immerse yourself in Balinese culture by visiting local villages, witnessing traditional ceremonies, and learning about the island's rich artistic heritage. Indulge in delicious Indonesian cuisine, from savory satays to flavorful curries, and experience the warm hospitality of the Balinese people.",
   },
@@ -56,21 +56,21 @@ const travelData: Data[] = [
     id: "2",
     title: "Top 10 Destinations for 2024",
     image:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvB5HdszlBqgSe3rDL6o-ArxDL2XWkqd3qTg&s",
+      "https://i.pinimg.com/736x/84/70/94/847094a5d2df67f4fc7a7a6b77bcfe7b.jpg",
     content: "Airlines ground Asia ground Bali flights after volcano erupts",
   },
   {
     id: "3",
     title: "How to Travel Smart on a Budget",
     image:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvB5HdszlBqgSe3rDL6o-ArxDL2XWkqd3qTg&s",
+      "https://i.pinimg.com/736x/84/70/94/847094a5d2df67f4fc7a7a6b77bcfe7b.jpg",
     content: "Airlines ground Asia ground Bali flights after volcano erupts",
   },
   {
     id: "4",
     title: "The Rise of Eco-Tourism: A Green Revolution",
     image:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvB5HdszlBqgSe3rDL6o-ArxDL2XWkqd3qTg&s",
+      "https://i.pinimg.com/736x/84/70/94/847094a5d2df67f4fc7a7a6b77bcfe7b.jpg",
     content: "Airlines ground Asia ground Bali flights after volcano erupts",
   },
 ];

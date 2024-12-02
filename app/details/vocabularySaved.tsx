@@ -10,20 +10,128 @@ import {
 import { ChevronLeft, Bookmark, Volume2 } from "lucide-react-native";
 import Svg, { Path } from "react-native-svg";
 import { useNavigation } from "expo-router";
+import { useRouter } from "expo-router";
 
 export default function vocabularySaved() {
-  const words = [
-    "Aardvark",
-    "Abandon",
-    "Abate",
-    "Abbey",
-    "Abdomen",
-    "Abduct",
-    "Abide",
-    "Ability",
-    "Abject",
-    "Abnormal",
+  interface Word {
+    word: string;
+    definition: string;
+    relatedWords: string[];
+    category: string;
+    pronunciation: {
+      UK: string;
+    };
+    image: string;
+  }
+
+  const words: Word[] = [
+    {
+      word: "Aardvark",
+      definition:
+        "A nocturnal mammal native to Africa, known for digging with its large claws.",
+      relatedWords: ["Ant", "Burrow", "Insectivore"],
+      category: "Animal",
+      pronunciation: {
+        UK: "/ˈɑːd.vɑːk/",
+      },
+      image: "https://b-cdn.springnest.com/media/img/9u/aardvarke131f0a.jpg",
+    },
+    {
+      word: "Abandon",
+      definition: "To leave behind or forsake someone or something.",
+      relatedWords: ["Desert", "Forsake", "Leave"],
+      category: "Action",
+      pronunciation: {
+        UK: "/əˈbæn.dən/",
+      },
+      image: "https://example.com/abandon-image.png",
+    },
+    {
+      word: "Abate",
+      definition: "To reduce or lessen in degree, intensity, or severity.",
+      relatedWords: ["Diminish", "Decrease", "Reduce"],
+      category: "Action",
+      pronunciation: {
+        UK: "/əˈbeɪt/",
+      },
+      image: "https://example.com/abate-image.png",
+    },
+    {
+      word: "Abbey",
+      definition:
+        "A building or complex of buildings used by a religious community, especially monks.",
+      relatedWords: ["Monastery", "Church", "Convent"],
+      category: "Place",
+      pronunciation: {
+        UK: "/ˈæb.i/",
+      },
+      image:
+        "https://cdn.britannica.com/12/144312-050-B06DACFC/Dominican-abbey-Santa-Maria-da-Vitoria-Portugal.jpg",
+    },
+    {
+      word: "Cacophony",
+      definition: "A harsh, discordant mixture of sounds.",
+      relatedWords: ["Noise", "Discord", "Clamor"],
+      category: "Sound",
+      pronunciation: { UK: "/kəˈkɒf.ə.ni/"},
+      image: "https://example.com/cacophony-image.png",
+    },
+    {
+      word: "Ephemeral",
+      definition: "Lasting for a very short time.",
+      relatedWords: ["Fleeting", "Transient", "Short-lived"],
+      category: "Time",
+      pronunciation: { UK: "/ɪˈfem.ər.əl/"},
+      image: "https://example.com/ephemeral-image.png",
+    },
+    {
+      word: "Gregarious",
+      definition: "Fond of company; sociable.",
+      relatedWords: ["Sociable", "Friendly", "Outspoken"],
+      category: "Personality",
+      pronunciation: { UK: "/ɡrɪˈɡeəriəs/"},
+      image: "https://example.com/gregarious-image.png",
+    },
+    {
+      word: "Harbinger",
+      definition:
+        "A person or thing that announces or signals the approach of another.",
+      relatedWords: ["Messenger", "Forerunner", "Precursor"],
+      category: "Person/Thing",
+      pronunciation: { UK: "/ˈhɑːbɪndʒə(r)/"},
+      image: "https://example.com/harbinger-image.png",
+    },
+    {
+      word: "Kinetic",
+      definition: "Relating to or resulting from motion.",
+      relatedWords: ["Moving", "Dynamic", "Active"],
+      category: "Physics",
+      pronunciation: { UK: "/kɪˈnɛtɪk/"},
+      image: "https://example.com/kinetic-image.png",
+    },
+    {
+      word: "Laconic",
+      definition: "Using very few words.",
+      relatedWords: ["Succinct", "Brief", "Concise"],
+      category: "Communication",
+      pronunciation: { UK: "/ləˈkɒnɪk/"},
+      image: "https://example.com/laconic-image.png",
+    },
+    {
+      word: "Mellifluous",
+      definition: "Sweet or musical; pleasant to hear.",
+      relatedWords: ["Euphonious", "Harmonious", "Musical"],
+      category: "Sound",
+      pronunciation: { UK: "/mɛˈlɪfluəs/"},
+      image: "https://example.com/mellifluous-image.png",
+    },
   ];
+
+  const router = useRouter();
+
+  const handleWordPress = (word: Object) => {
+    router.push(`/details/vocabularyDetail?word=${JSON.stringify(word)}`);
+  };
 
   const navigation = useNavigation();
 
@@ -37,8 +145,8 @@ export default function vocabularySaved() {
       </View>
       <ScrollView style={styles.wordList}>
         {words.map((word, index) => (
-          <View key={index} style={styles.wordItem}>
-            <Text style={styles.wordText}>{word}</Text>
+          <TouchableOpacity key={index} style={styles.wordItem} onPress={() => handleWordPress(word)}>
+            <Text style={styles.wordText}>{word.word}</Text>
             <TouchableOpacity>
               <Svg width="20" height="20" viewBox="0 0 20 20" fill="none">
 
@@ -50,7 +158,7 @@ export default function vocabularySaved() {
                 />
               </Svg>
             </TouchableOpacity>
-          </View>
+          </TouchableOpacity>
         ))}
       </ScrollView>
     </View>

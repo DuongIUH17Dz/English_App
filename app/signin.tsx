@@ -17,19 +17,22 @@ export default function Signin() {
   const [focusedInput, setFocusedInput] = useState<string | null>(null);
   const [emailPhone, setEmailPhone] = useState("");
   const [password, setPassword] = useState("");
-  const [scale] = useState(new Animated.Value(1.2)); // Initial scale for icons
+  const [scale] = useState(new Animated.Value(1.2)); 
 
-  // Check if both fields are filled
   const isFormFilled = emailPhone && password;
 
   const handleSignIn = () => {
     if (isFormFilled) {
-      router.push("/home");
+      if (emailPhone === 'admin' && password === 'admin') {
+        router.push("/admin");
+      } else {
+        router.push("/home");
+      }
     } else {
       alert("Please input email/phone and password");
     }
   };
-
+  
   const handlePressIn = () => {
     Animated.spring(scale, {
       toValue: 1.2,

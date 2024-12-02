@@ -27,30 +27,23 @@ const videos: Video[] = [
   {
     id: "1",
     title: "Exploring the World",
-    image: require("../../assets/images/video1.png"),
+    image: "https://img.freepik.com/free-photo/animal-eye-staring-close-up-watch-nature-generative-ai_188544-15471.jpg",
     category: "News",
     time: "10 hrs ago",
   },
   {
     id: "2",
     title: "Cooking Masterclass",
-    image: require("../../assets/images/video1.png"),
+    image: "https://c4.wallpaperflare.com/wallpaper/848/223/819/nature-jpg-format-download-1920x1200-wallpaper-preview.jpg",
     category: "News",
     time: "12 hrs ago",
   },
   {
     id: "3",
     title: "Tech Innovations 2024",
-    image: require("../../assets/images/video1.png"),
+    image: "https://t4.ftcdn.net/jpg/09/37/12/73/360_F_937127370_RzigoTq55hhV6TOcnRXbZ2kBjSOgWUMJ.jpg",
     category: "News",
     time: "8 hrs ago",
-  },
-  {
-    id: "4",
-    title: "Workout Motivation",
-    image: require("../../assets/images/video1.png"),
-    category: "News",
-    time: "5 hrs ago",
   },
 ];
 
@@ -403,7 +396,7 @@ export default function home() {
                 <Text style={styles.newTime}>{item.time}</Text>
               </View>
             </View>
-            <Image source={item.image} style={styles.videoImage} />
+            <Image source={{uri : item.image}} style={styles.videoImage} />
           </View>
         ))}
       </View>
