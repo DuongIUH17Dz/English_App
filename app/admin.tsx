@@ -9,10 +9,22 @@ import {
   TextInput,
   Button,
   Alert,
+  Image,
 } from "react-native";
 import { useRouter } from "expo-router";
 
-const App = () => {
+interface Word {
+  word: string;
+  definition: string;
+  relatedWords: string[];
+  category: string;
+  pronunciation: {
+    UK: string;
+  };
+  image: string;
+}
+
+const admin = () => {
   const dataJson = require("../data/data.json");
   const router = useRouter();
   const [menuVisible, setMenuVisible] = useState(false);
@@ -22,7 +34,18 @@ const App = () => {
   const [currentItem, setCurrentItem] = useState(null);
   const [hoveredMenu, setHoveredMenu] = useState(null);
 
+  const [words, setWords] = useState<Word[]>([]);
+
   useEffect(() => {
+    fetch("https://64544639a74f994b333d117e.mockapi.io/dictionary")
+      .then((response) => response.json())
+      .then((data) => {
+        setWords(data);
+      })
+      .catch((error) => {
+        console.error("Error fetching data", error);
+      });
+
     let newData = [];
     if (selectedTab === "listening") {
       newData = [...dataJson.recentlyData, ...dataJson.topicsData];
@@ -34,9 +57,22 @@ const App = () => {
       ];
     } else if (selectedTab === "video") {
       newData = [...dataJson.nextSeries];
+    } else if (selectedTab === "vocabulary") {
+      newData = words;
     }
     setData(newData);
-  }, [selectedTab]);
+  }, [selectedTab, words]);
+
+  const fetchVocabularyData = () => {
+    fetch("https://64544639a74f994b333d117e.mockapi.io/dictionary")
+      .then((response) => response.json())
+      .then((data) => {
+        setWords(data);
+      })
+      .catch((error) => {
+        console.error("Error fetching vocabulary data", error);
+      });
+  };
 
   const handleAddNew = () => {
     setCurrentItem(null);
@@ -44,22 +80,49 @@ const App = () => {
   };
 
   const handleSave = () => {
-    if (!currentItem?.title) {
-      Alert.alert("Error", "Title is required!");
-      return;
-    }
+    if (selectedTab === "vocabulary") {
+      const apiUrl = currentItem.id
+        ? `https://64544639a74f994b333d117e.mockapi.io/dictionary/${currentItem.id}`
+        : "https://64544639a74f994b333d117e.mockapi.io/dictionary";
 
-    if (currentItem.id) {
-      setData((prevData) =>
-        prevData.map((item) =>
-          item.id === currentItem.id ? currentItem : item
-        )
-      );
+      const method = currentItem.id ? "PUT" : "POST";
+
+      fetch(apiUrl, {
+        method: method,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(currentItem),
+      })
+        .then((response) => response.json())
+        .then((updatedItem) => {
+          setWords((prevWords) =>
+            currentItem.id
+              ? prevWords.map((word) =>
+                  word.id === currentItem.id ? updatedItem : word
+                )
+              : [...prevWords, updatedItem]
+          );
+          fetchVocabularyData();
+          setModalVisible(false);
+        })
+        .catch((error) => {
+          console.error("Error saving vocabulary", error);
+          Alert.alert("Error", "Unable to save the item!");
+        });
     } else {
-      const newId = Date.now();
-      setData((prevData) => [...prevData, { ...currentItem, id: newId }]);
+      if (currentItem.id) {
+        setData((prevData) =>
+          prevData.map((item) =>
+            item.id === currentItem.id ? currentItem : item
+          )
+        );
+      } else {
+        const newId = Date.now();
+        setData((prevData) => [...prevData, { ...currentItem, id: newId }]);
+      }
+      setModalVisible(false);
     }
-    setModalVisible(false);
   };
 
   const handleEdit = (item) => {
@@ -80,8 +143,29 @@ const App = () => {
         {
           text: "Delete",
           style: "destructive",
-          onPress: () =>
-            setData((prevData) => prevData.filter((item) => item.id !== id)),
+          onPress: () => {
+            if (selectedTab === "vocabulary") {
+              fetch(
+                `https://64544639a74f994b333d117e.mockapi.io/dictionary/${id}`,
+                {
+                  method: "DELETE",
+                }
+              )
+                .then(() => {
+                  setWords((prevWords) =>
+                    prevWords.filter((word) => word.id !== id)
+                  );
+                  fetchVocabularyData();
+                  setModalVisible(false);
+                })
+                .catch((error) => {
+                  console.error("Error deleting vocabulary", error);
+                  Alert.alert("Error", "Unable to delete the item!");
+                });
+            } else {
+              setData((prevData) => prevData.filter((item) => item.id !== id));
+            }
+          },
         },
       ]
     );
@@ -95,14 +179,44 @@ const App = () => {
           <Text style={styles.text}>{item.image}</Text>
           {Array.isArray(item.content) ? (
             item.content.map((contentItem, index) => (
-              <Text key={index} style={styles.text}>{contentItem}</Text>
+              <Text key={index} style={styles.text}>
+                {contentItem}
+              </Text>
             ))
           ) : (
             <Text style={styles.text}>{item.content}</Text>
           )}
         </>
       )}
-      {selectedTab === "video" && <Text style={styles.text}>{item.thumbnail}</Text>}
+      {selectedTab === "video" && (
+        <Text style={styles.text}>{item.thumbnail}</Text>
+      )}
+      {selectedTab === "vocabulary" && item.word && (
+        <View style={styles.vocabularyContainer}>
+          <Text style={styles.text}>{item.word}</Text>
+          <Text style={styles.text}>{item.definition}</Text>
+          <Text style={styles.text}>Category: {item.category}</Text>
+          <Text style={styles.text}>
+            Pronunciation (UK): {item.pronunciation?.UK || "N/A"}
+          </Text>
+          <Text>Related Words:</Text>
+          {item.relatedWords?.length > 0 ? (
+            <FlatList
+              data={item.relatedWords}
+              keyExtractor={(relatedWord, index) =>
+                relatedWord.word || index.toString()
+              }
+              renderItem={({ item }) => <Text style={styles.text}>{item}</Text>}
+              horizontal
+            />
+          ) : (
+            <Text style={styles.text}>No related words available.</Text>
+          )}
+          {item.image && (
+            <Image source={{ uri: item.image }} style={styles.image} />
+          )}
+        </View>
+      )}
     </TouchableOpacity>
   );
 
@@ -122,7 +236,7 @@ const App = () => {
 
       {menuVisible && (
         <View style={styles.menu}>
-          {["listening", "news", "video"].map((tab) => (
+          {["listening", "news", "video", "vocabulary"].map((tab) => (
             <TouchableOpacity
               key={tab}
               style={[
@@ -179,7 +293,7 @@ const App = () => {
                 setCurrentItem({ ...currentItem, title: text })
               }
             />
-            {selectedTab !== "video" && (
+            {selectedTab !== "video" && selectedTab !== "vocabulary" && (
               <>
                 <TextInput
                   style={styles.input}
@@ -192,11 +306,15 @@ const App = () => {
                 <TextInput
                   style={styles.input}
                   placeholder="Content"
-                  value={currentItem?.content?.join("\n") || ""} // Handle array content
+                  value={
+                    Array.isArray(currentItem?.content)
+                      ? currentItem.content.join("\n")
+                      : currentItem?.content || ""
+                  }
                   onChangeText={(text) =>
                     setCurrentItem({
                       ...currentItem,
-                      content: text.split("\n"),
+                      content: text.includes("\n") ? text.split("\n") : text,
                     })
                   }
                   multiline
@@ -212,6 +330,69 @@ const App = () => {
                   setCurrentItem({ ...currentItem, thumbnail: text })
                 }
               />
+            )}
+            {selectedTab === "vocabulary" && (
+              <>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Word"
+                  value={currentItem?.word || ""}
+                  onChangeText={(text) =>
+                    setCurrentItem({ ...currentItem, word: text })
+                  }
+                />
+                <TextInput
+                  style={styles.input}
+                  placeholder="Definition"
+                  value={currentItem?.definition || ""}
+                  onChangeText={(text) =>
+                    setCurrentItem({ ...currentItem, definition: text })
+                  }
+                  multiline
+                />
+                <TextInput
+                  style={styles.input}
+                  placeholder="Category"
+                  value={currentItem?.category || ""}
+                  onChangeText={(text) =>
+                    setCurrentItem({ ...currentItem, category: text })
+                  }
+                />
+                <TextInput
+                  style={styles.input}
+                  placeholder="Pronunciation (UK)"
+                  value={currentItem?.pronunciation?.UK || ""}
+                  onChangeText={(text) =>
+                    setCurrentItem({
+                      ...currentItem,
+                      pronunciation: {
+                        ...currentItem.pronunciation,
+                        UK: text,
+                      },
+                    })
+                  }
+                />
+                <TextInput
+                  style={styles.input}
+                  placeholder="Related Words (comma separated)"
+                  value={currentItem?.relatedWords?.join(", ") || ""}
+                  onChangeText={(text) =>
+                    setCurrentItem({
+                      ...currentItem,
+                      relatedWords: text.split(",").map((word) => word.trim()),
+                    })
+                  }
+                  multiline
+                />
+                <TextInput
+                  style={styles.input}
+                  placeholder="Image URL"
+                  value={currentItem?.image || ""}
+                  onChangeText={(text) =>
+                    setCurrentItem({ ...currentItem, image: text })
+                  }
+                />
+              </>
             )}
             <Button
               title={currentItem?.id ? "Update" : "Create"}
@@ -317,6 +498,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "rgba(0,0,0,0.5)",
   },
+  image: {
+    width: 100,
+    height: 100,
+    resizeMode: "contain",
+  },
+  vocabularyContainer: {
+    marginVertical: 10,
+  },
   modalContent: {
     backgroundColor: "#fff",
     padding: 20,
@@ -339,4 +528,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default App;
+export default admin;

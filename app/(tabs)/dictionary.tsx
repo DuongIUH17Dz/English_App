@@ -15,7 +15,6 @@ export default function Dictionary() {
   const router = useRouter();
   const [selectedWord, setSelectedWord] = useState(null);
 
-  // Define the interface for the word data
   interface Word {
     word: string;
     definition: string;
